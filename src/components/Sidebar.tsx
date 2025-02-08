@@ -11,6 +11,7 @@ import {
   ChevronRight,
   type LucideIcon,
 } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface NavItem {
   icon: LucideIcon;
@@ -65,6 +66,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleCollapse }) => {
             </li>
           ))}
         </ul>
+        <div className="p-4">
+          <ThemeToggle />
+        </div>
       </nav>
     </aside>
   );

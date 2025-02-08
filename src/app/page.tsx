@@ -1,5 +1,5 @@
 import type React from "react";
-import Layout from "./components/Layout";
+import Layout from "../components/Layout";
 
 const Home: React.FC = () => {
   return (
