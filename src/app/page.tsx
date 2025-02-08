@@ -1,9 +1,20 @@
-import Link from "next/link";
+import type React from "react";
+import Layout from "./components/Layout";
 
-export default function HomePage() {
+const Home: React.FC = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <h1 className="text-4xl font-extrabold">Hi there!!</h1>
-    </main>
+    <Layout>
+      <div className="p-6">
+        <h1 className="mb-4 text-2xl font-bold">
+          Welcome to the Responsive Navigation Layout
+        </h1>
+        <p>
+          This is the main content area. It adjusts based on the navigation
+          state and screen size.
+        </p>
+      </div>
+    </Layout>
   );
-}
+};
+
+export default Home;
