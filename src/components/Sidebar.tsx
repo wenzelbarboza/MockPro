@@ -66,9 +66,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleCollapse }) => {
             </li>
           ))}
         </ul>
-        <div className="p-4">
-          <ThemeToggle />
-        </div>
+        {!isCollapsed && (
+          <div className="p-4">
+            <ThemeToggle />
+          </div>
+        )}
       </nav>
     </aside>
   );
