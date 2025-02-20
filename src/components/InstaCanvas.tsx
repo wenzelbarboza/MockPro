@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import { Circle, Layer, Stage } from "react-konva";
 import type Konva from "konva";
+import { RectangleEllipsis } from "lucide-react";
 
 const InstaCanvas = (): JSX.Element => {
   const canvasRef = useRef<Konva.Stage | null>(null);
@@ -30,6 +31,9 @@ const InstaCanvas = (): JSX.Element => {
       <Stage width={600} height={600} className="bg-white" ref={canvasRef}>
         <Layer>
           <Circle x={100} y={100} radius={50} fill="red" draggable />
+        </Layer>
+        <Layer>
+          <Circle x={400} y={100} radius={50} fill="blue" draggable />
         </Layer>
       </Stage>
     </div>

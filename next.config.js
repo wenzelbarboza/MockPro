@@ -6,10 +6,7 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
-  webpack: (config) => {
-    config.externals = [...config.externals, { canvas: 'canvas' }];
-    return config;
-  },
+
 };
 
 export default config;

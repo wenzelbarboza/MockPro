@@ -9,8 +9,7 @@ const Home: React.FC = () => {
           Welcome to the Responsive Navigation Layout
         </h1>
         <p>
-          This is the main content area. It adjusts based on the navigation
-          state and screen size.
+          Working
         </p>
       </div>
     </Layout>
