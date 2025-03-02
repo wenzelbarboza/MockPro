@@ -21,70 +21,492 @@ interface BackgroundControlsProps {
 }
 
 const BackgroundControls: React.FC<BackgroundControlsProps> = ({
-  backgroundType,
   setBackgroundType,
   backgroundColor,
   setBackgroundColor,
-  gradientStops,
   setGradientStops,
-  gradientAngle,
   setGradientAngle,
 }) => {
+  const getGradientStyle = (stops: GradientStop[], angle = 0) => {
+    const gradientColors = stops
+      .map((stop) => `${stop.color} ${stop.offset * 100}%`)
+      .join(", ");
+    return `linear-gradient(${angle}deg, ${gradientColors})`;
+  };
+
+  const getRadialGradientStyle = (stops: GradientStop[]) => {
+    const gradientColors = stops
+      .map((stop) => `${stop.color} ${stop.offset * 100}%`)
+      .join(", ");
+    return `radial-gradient(circle at center, ${gradientColors})`;
+  };
+
   return (
     <>
       {/* Magic Gradients */}
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">Magic Gradients</h3>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-5 gap-2">
+          {/* Original gradients */}
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#2E1437" },
+                { offset: 0.4, color: "#1C0F26" },
+                { offset: 0.6, color: "#150C1E" },
+                { offset: 1, color: "#0D0912" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#2E1437" },
+                { offset: 0.4, color: "#1C0F26" },
+                { offset: 0.6, color: "#150C1E" },
+                { offset: 1, color: "#0D0912" },
+              ]),
+            }}
+            title="Dark Nebula"
+          />
+          {/* New gradients */}
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#1A1A2E" },
+                { offset: 0.3, color: "#16213E" },
+                { offset: 0.7, color: "#0F3460" },
+                { offset: 1, color: "#533483" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#1A1A2E" },
+                { offset: 0.3, color: "#16213E" },
+                { offset: 0.7, color: "#0F3460" },
+                { offset: 1, color: "#533483" },
+              ]),
+            }}
+            title="Cosmic Vortex"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#0B0B0F" },
+                { offset: 0.4, color: "#1B1B2F" },
+                { offset: 0.6, color: "#272741" },
+                { offset: 0.8, color: "#2C3E50" },
+                { offset: 1, color: "#2E5090" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#0B0B0F" },
+                { offset: 0.4, color: "#1B1B2F" },
+                { offset: 0.6, color: "#272741" },
+                { offset: 0.8, color: "#2C3E50" },
+                { offset: 1, color: "#2E5090" },
+              ]),
+            }}
+            title="Deep Space Portal"
+          />
           <button
             onClick={() => {
               setBackgroundType("linear-gradient");
               setGradientAngle(45);
               setGradientStops([
-                { offset: 0, color: "#FF6B6B" },
-                { offset: 0.5, color: "#4ECDC4" },
-                { offset: 1, color: "#45B7D1" },
+                { offset: 0, color: "#434343" },
+                { offset: 1, color: "#000000" },
               ]);
             }}
-            className="aspect-square rounded-lg bg-gradient-to-br from-[#FF6B6B] via-[#4ECDC4] to-[#45B7D1] shadow-sm transition-transform hover:scale-105"
-            title="Sunset Breeze"
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#434343" },
+                  { offset: 1, color: "#000000" },
+                ],
+                45,
+              ),
+            }}
+            title="Dark Slate"
           />
           <button
             onClick={() => {
               setBackgroundType("linear-gradient");
               setGradientAngle(135);
               setGradientStops([
-                { offset: 0, color: "#A8E6CF" },
-                { offset: 0.5, color: "#DCEDC1" },
-                { offset: 1, color: "#FFD3B6" },
+                { offset: 0, color: "#16222A" },
+                { offset: 1, color: "#3A6073" },
               ]);
             }}
-            className="aspect-square rounded-lg bg-gradient-to-bl from-[#A8E6CF] via-[#DCEDC1] to-[#FFD3B6] shadow-sm transition-transform hover:scale-105"
-            title="Spring Morning"
-          />
-          <button
-            onClick={() => {
-              setBackgroundType("linear-gradient");
-              setGradientAngle(90);
-              setGradientStops([
-                { offset: 0, color: "#FEE140" },
-                { offset: 1, color: "#FA709A" },
-              ]);
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#16222A" },
+                  { offset: 1, color: "#3A6073" },
+                ],
+                135,
+              ),
             }}
-            className="aspect-square rounded-lg bg-gradient-to-r from-[#FEE140] to-[#FA709A] shadow-sm transition-transform hover:scale-105"
-            title="Warm Sunset"
+            title="Steel"
           />
           <button
             onClick={() => {
               setBackgroundType("linear-gradient");
               setGradientAngle(45);
               setGradientStops([
-                { offset: 0, color: "#8EC5FC" },
-                { offset: 1, color: "#E0C3FC" },
+                { offset: 0, color: "#4A00E0" },
+                { offset: 1, color: "#8E2DE2" },
               ]);
             }}
-            className="aspect-square rounded-lg bg-gradient-to-br from-[#8EC5FC] to-[#E0C3FC] shadow-sm transition-transform hover:scale-105"
-            title="Lavender Sky"
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#4A00E0" },
+                  { offset: 1, color: "#8E2DE2" },
+                ],
+                45,
+              ),
+            }}
+            title="Dark Purple"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(90);
+              setGradientStops([
+                { offset: 0, color: "#1F1C2C" },
+                { offset: 0.5, color: "#928DAB" },
+                { offset: 1, color: "#1F1C2C" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#1F1C2C" },
+                  { offset: 0.5, color: "#928DAB" },
+                  { offset: 1, color: "#1F1C2C" },
+                ],
+                90,
+              ),
+            }}
+            title="Dark Mist"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(135);
+              setGradientStops([
+                { offset: 0, color: "#141E30" },
+                { offset: 0.5, color: "#243B55" },
+                { offset: 1, color: "#141E30" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#141E30" },
+                  { offset: 0.5, color: "#243B55" },
+                  { offset: 1, color: "#141E30" },
+                ],
+                135,
+              ),
+            }}
+            title="Royal Navy"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(45);
+              setGradientStops([
+                { offset: 0, color: "#0F0C29" },
+                { offset: 0.5, color: "#302B63" },
+                { offset: 1, color: "#24243E" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#0F0C29" },
+                  { offset: 0.5, color: "#302B63" },
+                  { offset: 1, color: "#24243E" },
+                ],
+                45,
+              ),
+            }}
+            title="Deep Space"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(90);
+              setGradientStops([
+                { offset: 0, color: "#232526" },
+                { offset: 1, color: "#414345" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#232526" },
+                  { offset: 1, color: "#414345" },
+                ],
+                90,
+              ),
+            }}
+            title="Midnight"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(135);
+              setGradientStops([
+                { offset: 0, color: "#2C3E50" },
+                { offset: 1, color: "#3498DB" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#2C3E50" },
+                  { offset: 1, color: "#3498DB" },
+                ],
+                135,
+              ),
+            }}
+            title="Royal Blue"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(45);
+              setGradientStops([
+                { offset: 0, color: "#000000" },
+                { offset: 0.5, color: "#434343" },
+                { offset: 1, color: "#000000" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#000000" },
+                  { offset: 0.5, color: "#434343" },
+                  { offset: 1, color: "#000000" },
+                ],
+                45,
+              ),
+            }}
+            title="Dark Matter"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(90);
+              setGradientStops([
+                { offset: 0, color: "#1F1C2C" },
+                { offset: 0.5, color: "#928DAB" },
+                { offset: 1, color: "#1F1C2C" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#1F1C2C" },
+                  { offset: 0.5, color: "#928DAB" },
+                  { offset: 1, color: "#1F1C2C" },
+                ],
+                90,
+              ),
+            }}
+            title="Dark Mist"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(135);
+              setGradientStops([
+                { offset: 0, color: "#141E30" },
+                { offset: 0.5, color: "#243B55" },
+                { offset: 1, color: "#141E30" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#141E30" },
+                  { offset: 0.5, color: "#243B55" },
+                  { offset: 1, color: "#141E30" },
+                ],
+                135,
+              ),
+            }}
+            title="Royal Navy"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(45);
+              setGradientStops([
+                { offset: 0, color: "#0F0C29" },
+                { offset: 0.5, color: "#302B63" },
+                { offset: 1, color: "#24243E" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#0F0C29" },
+                  { offset: 0.5, color: "#302B63" },
+                  { offset: 1, color: "#24243E" },
+                ],
+                45,
+              ),
+            }}
+            title="Deep Space"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(90);
+              setGradientStops([
+                { offset: 0, color: "#232526" },
+                { offset: 1, color: "#414345" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#232526" },
+                  { offset: 1, color: "#414345" },
+                ],
+                90,
+              ),
+            }}
+            title="Midnight"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(135);
+              setGradientStops([
+                { offset: 0, color: "#2C3E50" },
+                { offset: 1, color: "#3498DB" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#2C3E50" },
+                  { offset: 1, color: "#3498DB" },
+                ],
+                135,
+              ),
+            }}
+            title="Royal Blue"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(45);
+              setGradientStops([
+                { offset: 0, color: "#0F2027" },
+                { offset: 0.5, color: "#203A43" },
+                { offset: 1, color: "#2C5364" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#0F2027" },
+                  { offset: 0.5, color: "#203A43" },
+                  { offset: 1, color: "#2C5364" },
+                ],
+                135,
+              ),
+            }}
+            title="Deep Ocean"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(90);
+              setGradientStops([
+                { offset: 0, color: "#232526" },
+                { offset: 1, color: "#414345" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#232526" },
+                  { offset: 1, color: "#414345" },
+                ],
+                90,
+              ),
+            }}
+            title="Midnight"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(135);
+              setGradientStops([
+                { offset: 0, color: "#2C3E50" },
+                { offset: 1, color: "#3498DB" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#2C3E50" },
+                  { offset: 1, color: "#3498DB" },
+                ],
+                135,
+              ),
+            }}
+            title="Royal Blue"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(45);
+              setGradientStops([
+                { offset: 0, color: "#4A00E0" },
+                { offset: 1, color: "#8E2DE2" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#4A00E0" },
+                  { offset: 1, color: "#8E2DE2" },
+                ],
+                45,
+              ),
+            }}
+            title="Dark Purple"
           />
         </div>
       </div>
@@ -114,25 +536,77 @@ const BackgroundControls: React.FC<BackgroundControlsProps> = ({
             onClick={() => {
               setBackgroundType("radial-gradient");
               setGradientStops([
-                { offset: 0, color: "#D8B4FE" },
-                { offset: 0.6, color: "#818CF8" },
-                { offset: 1, color: "#38BDF8" },
+                { offset: 0, color: "#000000" },
+                { offset: 0.6, color: "#434343" },
+                { offset: 1, color: "#000000" },
               ]);
             }}
-            className="aspect-square rounded-lg bg-[radial-gradient(circle_at_30%_40%,_#D8B4FE_0%,_#818CF8_60%,_#38BDF8_100%)] shadow-sm transition-transform hover:scale-105"
-            title="Purple Haze"
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#000000" },
+                { offset: 0.6, color: "#434343" },
+                { offset: 1, color: "#000000" },
+              ]),
+            }}
+            title="Dark Matter"
           />
           <button
             onClick={() => {
               setBackgroundType("radial-gradient");
               setGradientStops([
-                { offset: 0, color: "#FDE68A" },
-                { offset: 0.6, color: "#F472B6" },
-                { offset: 1, color: "#7C3AED" },
+                { offset: 0, color: "#1F1C2C" },
+                { offset: 0.6, color: "#928DAB" },
+                { offset: 1, color: "#1F1C2C" },
               ]);
             }}
-            className="aspect-square rounded-lg bg-[radial-gradient(circle_at_70%_60%,_#FDE68A_0%,_#F472B6_60%,_#7C3AED_100%)] shadow-sm transition-transform hover:scale-105"
-            title="Sunset Dream"
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#1F1C2C" },
+                { offset: 0.6, color: "#928DAB" },
+                { offset: 1, color: "#1F1C2C" },
+              ]),
+            }}
+            title="Dark Mist"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#141E30" },
+                { offset: 0.6, color: "#243B55" },
+                { offset: 1, color: "#141E30" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#141E30" },
+                { offset: 0.6, color: "#243B55" },
+                { offset: 1, color: "#141E30" },
+              ]),
+            }}
+            title="Royal Navy"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#0F0C29" },
+                { offset: 0.5, color: "#302B63" },
+                { offset: 1, color: "#24243E" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#0F0C29" },
+                { offset: 0.5, color: "#302B63" },
+                { offset: 1, color: "#24243E" },
+              ]),
+            }}
+            title="Deep Space"
           />
         </div>
       </div>

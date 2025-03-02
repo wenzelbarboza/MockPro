@@ -2,13 +2,7 @@
 
 import React from "react";
 
-interface FrameTemplate {
-  id: string;
-  name: string;
-  size: number;
-  thickness: number;
-  color: string;
-}
+type DeviceType = "basic" | "iphone15";
 
 interface FrameControlsProps {
   frameColor: string;
@@ -19,16 +13,13 @@ interface FrameControlsProps {
   setFrameRotation: (rotation: number) => void;
   frameSize: number;
   setFrameSize: (size: number) => void;
-  frameTemplate: string | null;
-  setFrameTemplate: (templateId: string | null) => void;
+  frameTiltX: number;
+  setFrameTiltX: (tilt: number) => void;
+  frameTiltY: number;
+  setFrameTiltY: (tilt: number) => void;
+  deviceType: DeviceType;
+  setDeviceType: (type: DeviceType) => void;
 }
-
-const frameTemplates: FrameTemplate[] = [
-  { id: 'iphone-14', name: 'iPhone 14', size: 400, thickness: 20, color: '#1F2937' },
-  { id: 'iphone-14-pro', name: 'iPhone 14 Pro', size: 420, thickness: 22, color: '#111827' },
-  { id: 'macbook', name: 'MacBook', size: 500, thickness: 25, color: '#374151' },
-  { id: 'ipad', name: 'iPad', size: 450, thickness: 18, color: '#1F2937' },
-];
 
 const FrameControls: React.FC<FrameControlsProps> = ({
   frameColor,
@@ -39,39 +30,31 @@ const FrameControls: React.FC<FrameControlsProps> = ({
   setFrameRotation,
   frameSize,
   setFrameSize,
-  frameTemplate,
-  setFrameTemplate,
-}) => {
-  const handleFrameTemplateSelect = (templateId: string) => {
-    const template = frameTemplates.find(t => t.id === templateId);
-    if (template) {
-      setFrameTemplate(templateId);
-      setFrameSize(template.size);
-      setFrameThickness(template.thickness);
-      setFrameColor(template.color);
-    }
-  };
 
+  frameTiltX,
+  setFrameTiltX,
+  frameTiltY,
+  setFrameTiltY,
+  deviceType,
+  setDeviceType,
+}) => {
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Frame Templates</h3>
-        <div className="grid grid-cols-2 gap-2">
-          {frameTemplates.map((template) => (
-            <button
-              key={template.id}
-              onClick={() => handleFrameTemplateSelect(template.id)}
-              className={`rounded-lg border p-2 transition-colors ${frameTemplate === template.id ? 'border-primary bg-primary/10' : 'border-border hover:bg-accent'}`}
-            >
-              {template.name}
-            </button>
-          ))}
-        </div>
-      </div>
 
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">Frame Settings</h3>
         <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <label className="w-24 text-sm">Device:</label>
+            <select
+              value={deviceType}
+              onChange={(e) => setDeviceType(e.target.value as DeviceType)}
+              className="flex-1 rounded border border-gray-300 p-2"
+            >
+              <option value="basic">Basic Frame</option>
+              <option value="iphone15">iPhone 15</option>
+            </select>
+          </div>
           <div className="flex items-center gap-2">
             <label className="w-24 text-sm">Color:</label>
             <input
@@ -83,18 +66,20 @@ const FrameControls: React.FC<FrameControlsProps> = ({
             <span className="text-sm">{frameColor}</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <label className="w-24 text-sm">Thickness:</label>
-            <input
-              type="range"
-              min="1"
-              max="50"
-              value={frameThickness}
-              onChange={(e) => setFrameThickness(Number(e.target.value))}
-              className="flex-1"
-            />
-            <span className="w-12 text-sm">{frameThickness}px</span>
-          </div>
+          {deviceType === "basic" && (
+            <div className="flex items-center gap-2">
+              <label className="w-24 text-sm">Thickness:</label>
+              <input
+                type="range"
+                min="1"
+                max="50"
+                value={frameThickness}
+                onChange={(e) => setFrameThickness(Number(e.target.value))}
+                className="flex-1"
+              />
+              <span className="w-12 text-sm">{frameThickness}px</span>
+            </div>
+          )}
 
           <div className="flex items-center gap-2">
             <label className="w-24 text-sm">Rotation:</label>
@@ -113,13 +98,39 @@ const FrameControls: React.FC<FrameControlsProps> = ({
             <label className="w-24 text-sm">Size:</label>
             <input
               type="range"
-              min="200"
-              max="600"
+              min={deviceType === "iphone15" ? 300 : 200}
+              max={deviceType === "iphone15" ? 800 : 600}
               value={frameSize}
               onChange={(e) => setFrameSize(Number(e.target.value))}
               className="flex-1"
             />
             <span className="w-12 text-sm">{frameSize}px</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="w-24 text-sm">Tilt X:</label>
+            <input
+              type="range"
+              min="-45"
+              max="45"
+              value={frameTiltX ?? 0}
+              onChange={(e) => setFrameTiltX?.(Number(e.target.value))}
+              className="flex-1"
+            />
+            <span className="w-12 text-sm">{frameTiltX ?? 0}°</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="w-24 text-sm">Tilt Y:</label>
+            <input
+              type="range"
+              min="-45"
+              max="45"
+              value={frameTiltY ?? 0}
+              onChange={(e) => setFrameTiltY?.(Number(e.target.value))}
+              className="flex-1"
+            />
+            <span className="w-12 text-sm">{frameTiltY ?? 0}°</span>
           </div>
         </div>
       </div>

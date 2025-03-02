@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import BackgroundControls from "./canvas/BackgroundControls";
 import FrameControls from "./canvas/FrameControls";
-import CanvasRenderer from "./canvas/CanvasRenderer";
+import FramePreview from "./canvas/FramePreview";
+import html2canvas from "html2canvas";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
+type DeviceType = "basic" | "iphone15";
 
 interface GradientStop {
   offset: number;
@@ -18,9 +20,8 @@ const DEFAULT_GRADIENT_STOPS: GradientStop[] = [
 ];
 
 const InstaCanvas = (): JSX.Element => {
-  const [activeTab, setActiveTab] = useState<"background" | "frame">(
-    "background",
-  );
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [activeTab, setActiveTab] = useState<"background" | "frame">("background");
   const [backgroundType, setBackgroundType] = useState<BackgroundType>("solid");
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
   const [gradientStops, setGradientStops] = useState<GradientStop[]>(
@@ -30,11 +31,11 @@ const InstaCanvas = (): JSX.Element => {
   const [frameColor, setFrameColor] = useState("#000000");
   const [frameThickness, setFrameThickness] = useState(20);
   const [frameRotation, setFrameRotation] = useState(0);
-  const [uploadedImage, setUploadedImage] = useState<HTMLImageElement | null>(
-    null,
-  );
+  const [frameTiltX, setFrameTiltX] = useState<number>(0);
+  const [frameTiltY, setFrameTiltY] = useState<number>(0);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState(400);
-  const [frameTemplate, setFrameTemplate] = useState<string | null>(null);
+  const [deviceType, setDeviceType] = useState<DeviceType>("basic");
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -42,23 +43,70 @@ const InstaCanvas = (): JSX.Element => {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          const img = document.createElement("img");
-          img.src = event.target.result as string;
-          img.onload = () => {
-            setUploadedImage(img);
-          };
+          setUploadedImage(event.target.result as string);
         }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleDownload = (): void => {
-    const canvas = document.querySelector("canvas");
-    if (!canvas) return;
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const getBackgroundStyle = () => {
+    if (backgroundType === "solid") {
+      return { background: backgroundColor };
+    }
+
+    const gradientColors = gradientStops
+      .map((stop) => `${stop.color} ${stop.offset * 100}%`)
+      .join(", ");
+
+    if (backgroundType === "linear-gradient") {
+      return {
+        background: `linear-gradient(${gradientAngle}deg, ${gradientColors})`,
+      };
+    }
+
+    if (backgroundType === "radial-gradient") {
+      return {
+        background: `radial-gradient(circle at center, ${gradientColors})`,
+      };
+    }
+
+    return {};
+  };
+
+  const handleDownload = async () => {
+    const element = document.getElementById("canvas-content");
+    if (!element) return;
 
     try {
-      const dataURL = canvas.toDataURL();
+      const canvas = await html2canvas(element, {
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        scale: 2, // Higher quality output
+        onclone: (clonedDoc) => {
+          // Force proper rendering in the cloned document
+          const clonedElement = clonedDoc.getElementById("canvas-content");
+          if (clonedElement) {
+            // Ensure all elements inside are properly positioned
+            const imageElements = clonedElement.querySelectorAll("img");
+            imageElements.forEach((img) => {
+              img.style.position = "absolute";
+              img.style.width = "100%";
+              img.style.height = "100%";
+              img.style.inset = "0";
+              img.style.objectFit = "cover";
+            });
+          }
+        },
+      });
+
+      // Download the image
+      const dataURL = canvas.toDataURL("image/png", 1.0);
       const link = document.createElement("a");
       link.href = dataURL;
       link.download = "instaCanvas.png";
@@ -70,19 +118,33 @@ const InstaCanvas = (): JSX.Element => {
 
   return (
     <div className="flex h-screen w-full">
-      {/* Canvas - Left Side */}
-      <div className="flex w-3/4 items-center justify-center">
-        <CanvasRenderer
-          backgroundType={backgroundType}
-          backgroundColor={backgroundColor}
-          gradientStops={gradientStops}
-          gradientAngle={gradientAngle}
-          frameColor={frameColor}
-          frameThickness={frameThickness}
-          frameRotation={frameRotation}
-          frameSize={frameSize}
-          uploadedImage={uploadedImage}
-        />
+      {/* Preview Area - Left Side */}
+      <div className="flex w-3/4 items-center justify-center bg-gray-50">
+        <div
+          id="canvas-content"
+          className="relative aspect-square w-[600px] border-2 border-gray-300 shadow-lg"
+          style={getBackgroundStyle()}
+        >
+          <FramePreview
+            frameColor={frameColor}
+            frameThickness={frameThickness}
+            frameRotation={frameRotation}
+            frameSize={frameSize}
+            frameTiltX={frameTiltX}
+            frameTiltY={frameTiltY}
+            deviceType={deviceType}
+            onUploadClick={handleUploadClick}
+          >
+            {uploadedImage && (
+              <img
+                src={uploadedImage}
+                alt="Uploaded"
+                className="h-full w-full object-cover"
+                style={{ display: "block", position: "absolute", inset: "0" }}
+              />
+            )}
+          </FramePreview>
+        </div>
       </div>
 
       {/* Controls Panel - Right Side */}
@@ -104,15 +166,24 @@ const InstaCanvas = (): JSX.Element => {
             </button>
           </div>
 
-          {/* Image Upload */}
+          {/* Hidden File Input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+
+          {/* Image Upload Button */}
           <div className="flex flex-col gap-4">
             <h3 className="text-lg font-semibold">Image</h3>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="cursor-pointer rounded border border-gray-300 p-2"
-            />
+            <button
+              onClick={handleUploadClick}
+              className="cursor-pointer rounded border border-gray-300 p-2 hover:bg-gray-50"
+            >
+              Choose Image
+            </button>
           </div>
 
           {/* Conditional Rendering of Controls */}
@@ -137,8 +208,12 @@ const InstaCanvas = (): JSX.Element => {
               setFrameRotation={setFrameRotation}
               frameSize={frameSize}
               setFrameSize={setFrameSize}
-              frameTemplate={frameTemplate}
-              setFrameTemplate={setFrameTemplate}
+              frameTiltX={frameTiltX}
+              setFrameTiltX={setFrameTiltX}
+              frameTiltY={frameTiltY}
+              setFrameTiltY={setFrameTiltY}
+              deviceType={deviceType}
+              setDeviceType={setDeviceType}
             />
           )}
 
