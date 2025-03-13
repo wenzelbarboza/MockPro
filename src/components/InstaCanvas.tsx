@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, use, type Usable } from "react";
 import BackgroundControls from "./canvas/BackgroundControls";
 import FrameControls from "./canvas/FrameControls";
 import FramePreview from "./canvas/FramePreview";
 import html2canvas from "html2canvas";
+import Image from "next/image";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
-type DeviceType = "basic" | "iphone15";
+export type DeviceType = "basic" | "iphone15";
 
 interface GradientStop {
   offset: number;
@@ -19,9 +20,24 @@ const DEFAULT_GRADIENT_STOPS: GradientStop[] = [
   { offset: 1, color: "#000000" },
 ];
 
-const InstaCanvas = (): JSX.Element => {
+type InstaCanvasProps = {
+  params: {
+    type: DeviceType;
+  };
+};
+
+const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [activeTab, setActiveTab] = useState<"background" | "frame">("background");
+
+  const { type } = use<{ type: DeviceType }>(
+    params as unknown as Usable<{ type: DeviceType }>,
+  );
+
+  console.log("type: ", type);
+
+  const [activeTab, setActiveTab] = useState<"background" | "frame">(
+    "background",
+  );
   const [backgroundType, setBackgroundType] = useState<BackgroundType>("solid");
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
   const [gradientStops, setGradientStops] = useState<GradientStop[]>(
@@ -35,7 +51,7 @@ const InstaCanvas = (): JSX.Element => {
   const [frameTiltY, setFrameTiltY] = useState<number>(0);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState(400);
-  const [deviceType, setDeviceType] = useState<DeviceType>("basic");
+  const [deviceType, setDeviceType] = useState<DeviceType>(type);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -117,9 +133,9 @@ const InstaCanvas = (): JSX.Element => {
   };
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex h-screen w-full overflow-hidden">
       {/* Preview Area - Left Side */}
-      <div className="flex w-3/4 items-center justify-center bg-gray-50">
+      <div className="flex w-3/4 items-center justify-center overflow-hidden bg-gray-50">
         <div
           id="canvas-content"
           className="relative aspect-square w-[600px] border-2 border-gray-300 shadow-lg"
