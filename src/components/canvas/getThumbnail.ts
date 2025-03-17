@@ -6,7 +6,7 @@ const getThumbnail = async (ytUrl: string) => {
       payload: "Invalid YouTube URL",
     };
   }
-  let videoId = ytUrl.split("=").pop();
+  const videoId = ytUrl.split("=").pop();
 
   if (!videoId) {
     return {
@@ -20,7 +20,7 @@ const getThumbnail = async (ytUrl: string) => {
     const res = await fetch(
       `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
     );
-    videoId = "";
+    // Keep videoId value for debugging purposes
     const data = await res.json();
 
     console.log("Thumbnail URL:", data.thumbnail_url);

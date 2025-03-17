@@ -152,13 +152,22 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
             onUploadClick={handleUploadClick}
             setUploadedImage={setUploadedImage}
           >
-            {uploadedImage && (
+            {uploadedImage && deviceType === "youtube" ? (
               <img
                 src={uploadedImage}
                 alt="Uploaded"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
                 style={{ display: "block", position: "absolute", inset: "0" }}
               />
+            ) : (
+              uploadedImage && (
+                <img
+                  src={uploadedImage}
+                  alt="Uploaded"
+                  className="h-full w-full object-cover"
+                  style={{ display: "block", position: "absolute", inset: "0" }}
+                />
+              )
             )}
           </FramePreview>
         </div>

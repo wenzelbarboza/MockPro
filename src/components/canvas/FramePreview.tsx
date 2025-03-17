@@ -128,14 +128,20 @@ const FramePreview: React.FC<FramePreviewProps> = ({
       case "youtube":
         return (
           <div
-            className="absolute"
+            className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
             style={{
-              height: `${frameSize}px`,
+              height: `${children ? "auto" : frameSize}px`,
               width: `${children ? "auto" : frameSize}px`,
-              backgroundColor: frameColor,
+              maxWidth: "100%",
+              maxHeight: "100%",
             }}
           >
-            <div className="absolute inset-0 overflow-hidden">
+            <div
+              className="h-full w-full overflow-visible"
+              style={{
+                clipPath: `inset(90px 0 90px 0 round 10px)`,
+              }}
+            >
               {children ?? ytLinkPlaceholder}
             </div>
           </div>
