@@ -8,7 +8,7 @@ import html2canvas from "html2canvas";
 import Image from "next/image";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
-export type DeviceType = "basic" | "iphone15";
+export type DeviceType = "basic" | "iphone15" | "youtube";
 
 interface GradientStop {
   offset: number;
@@ -150,6 +150,7 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
             frameTiltY={frameTiltY}
             deviceType={deviceType}
             onUploadClick={handleUploadClick}
+            setUploadedImage={setUploadedImage}
           >
             {uploadedImage && (
               <img

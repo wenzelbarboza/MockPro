@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
-
-type DeviceType = "basic" | "iphone15";
+import React, { type Dispatch, type SetStateAction, useState } from "react";
+import type { DeviceType } from "../InstaCanvas";
+import getThumbnail from "./getThumbnail";
+import { Button } from "../ui/button";
 
 interface FramePreviewProps {
   frameColor: string;
@@ -14,6 +15,7 @@ interface FramePreviewProps {
   deviceType: DeviceType;
   children?: React.ReactNode;
   onUploadClick?: () => void;
+  setUploadedImage?: Dispatch<SetStateAction<string | null>>;
 }
 
 const FramePreview: React.FC<FramePreviewProps> = ({
@@ -26,7 +28,23 @@ const FramePreview: React.FC<FramePreviewProps> = ({
   deviceType = "basic",
   children,
   onUploadClick,
+  setUploadedImage,
 }) => {
+  const [ytUrl, setYtUrl] = useState("");
+  const [ytUrlError, setYtUrlError] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+  // "https://www.youtube.com/watch?v=I2Bgi0Qcdvc"
+  const handleYtSubmit = async () => {
+    const ytImg = await getThumbnail(ytUrl);
+    if (ytImg.success) {
+      setImgUrl(ytImg.payload);
+      setUploadedImage?.(ytImg.payload);
+    } else {
+      setYtUrlError(ytImg.payload);
+    }
+    console.log("urlis: ", ytImg);
+  };
+
   const renderDeviceFrame = () => {
     const handleUploadClick = (e: React.MouseEvent) => {
       e.preventDefault();
@@ -57,11 +75,27 @@ const FramePreview: React.FC<FramePreviewProps> = ({
       </div>
     );
 
+    const ytLinkPlaceholder = (
+      <div className="flex h-full w-full items-center justify-center bg-yellow-300">
+        <input
+          type="text"
+          placeholder="paste youtube video text here"
+          value={ytUrl}
+          onChange={(e) => setYtUrl(e.target.value)}
+        />
+        <Button onClick={handleYtSubmit}>get thumbnail</Button>
+        {ytUrlError && <span className="text-red-500">{ytUrlError}</span>}
+      </div>
+    );
+
     switch (deviceType) {
       case "iphone15":
         return (
           <div className="flex items-center justify-center">
-            <div className="relative h-[600px] w-72 rounded-[45px] border-8 border-zinc-900 shadow-[0_0_2px_2px_rgba(255,255,255,0.1)]" style={{ transform: `scale(${frameSize / 600})` }}>
+            <div
+              className="relative h-[600px] w-72 rounded-[45px] border-8 border-zinc-900 shadow-[0_0_2px_2px_rgba(255,255,255,0.1)]"
+              style={{ transform: `scale(${frameSize / 600})` }}
+            >
               {/* Dynamic Island */}
               <div className="absolute left-1/2 top-2 z-20 h-[25px] w-[90px] -translate-x-1/2 transform rounded-full bg-zinc-900"></div>
 
@@ -88,6 +122,21 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               <div className="absolute left-[-12px] top-60 h-12 w-[6px] rounded-l-md bg-zinc-900 shadow-md"></div>
               {/* Right Side Button (Power) */}
               <div className="absolute right-[-12px] top-44 h-16 w-[6px] rounded-r-md bg-zinc-900 shadow-md"></div>
+            </div>
+          </div>
+        );
+      case "youtube":
+        return (
+          <div
+            className="absolute"
+            style={{
+              height: `${frameSize}px`,
+              width: `${children ? "auto" : frameSize}px`,
+              backgroundColor: frameColor,
+            }}
+          >
+            <div className="absolute inset-0 overflow-hidden">
+              {children ?? ytLinkPlaceholder}
             </div>
           </div>
         );

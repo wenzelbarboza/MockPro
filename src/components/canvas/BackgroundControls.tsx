@@ -161,21 +161,23 @@ const BackgroundControls: React.FC<BackgroundControlsProps> = ({
               setBackgroundType("linear-gradient");
               setGradientAngle(45);
               setGradientStops([
-                { offset: 0, color: "#4A00E0" },
-                { offset: 1, color: "#8E2DE2" },
+                { offset: 0, color: "#000000" },
+                { offset: 0.5, color: "#434343" },
+                { offset: 1, color: "#000000" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
               background: getGradientStyle(
                 [
-                  { offset: 0, color: "#4A00E0" },
-                  { offset: 1, color: "#8E2DE2" },
+                  { offset: 0, color: "#000000" },
+                  { offset: 0.5, color: "#434343" },
+                  { offset: 1, color: "#000000" },
                 ],
                 45,
               ),
             }}
-            title="Dark Purple"
+            title="Dark Matter"
           />
           <button
             onClick={() => {
@@ -425,88 +427,147 @@ const BackgroundControls: React.FC<BackgroundControlsProps> = ({
           <button
             onClick={() => {
               setBackgroundType("linear-gradient");
-              setGradientAngle(45);
+              setGradientAngle(120);
               setGradientStops([
-                { offset: 0, color: "#0F2027" },
-                { offset: 0.5, color: "#203A43" },
-                { offset: 1, color: "#2C5364" },
+                { offset: 0, color: "#FF416C" },
+                { offset: 1, color: "#FF4B2B" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
               background: getGradientStyle(
                 [
-                  { offset: 0, color: "#0F2027" },
-                  { offset: 0.5, color: "#203A43" },
-                  { offset: 1, color: "#2C5364" },
+                  { offset: 0, color: "#FF416C" },
+                  { offset: 1, color: "#FF4B2B" },
                 ],
-                135,
+                120,
               ),
             }}
-            title="Deep Ocean"
+            title="Sunset Fire"
           />
           <button
             onClick={() => {
               setBackgroundType("linear-gradient");
-              setGradientAngle(90);
+              setGradientAngle(60);
               setGradientStops([
-                { offset: 0, color: "#232526" },
-                { offset: 1, color: "#414345" },
+                { offset: 0, color: "#8A2387" },
+                { offset: 0.5, color: "#E94057" },
+                { offset: 1, color: "#F27121" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
               background: getGradientStyle(
                 [
-                  { offset: 0, color: "#232526" },
-                  { offset: 1, color: "#414345" },
+                  { offset: 0, color: "#8A2387" },
+                  { offset: 0.5, color: "#E94057" },
+                  { offset: 1, color: "#F27121" },
                 ],
-                90,
+                60,
               ),
             }}
-            title="Midnight"
+            title="Vibrant Fusion"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("linear-gradient");
+              setGradientAngle(150);
+              setGradientStops([
+                { offset: 0, color: "#00C9FF" },
+                { offset: 1, color: "#92FE9D" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "#00C9FF" },
+                  { offset: 1, color: "#92FE9D" },
+                ],
+                150,
+              ),
+            }}
+            title="Aqua Splash"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#5D4157" },
+                { offset: 0.5, color: "#A8CABA" },
+                { offset: 1, color: "#5D4157" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#5D4157" },
+                { offset: 0.5, color: "#A8CABA" },
+                { offset: 1, color: "#5D4157" },
+              ]),
+            }}
+            title="Mystic Haze"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#3A1C71" },
+                { offset: 0.3, color: "#D76D77" },
+                { offset: 1, color: "#FFAF7B" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background: getRadialGradientStyle([
+                { offset: 0, color: "#3A1C71" },
+                { offset: 0.3, color: "#D76D77" },
+                { offset: 1, color: "#FFAF7B" },
+              ]),
+            }}
+            title="Twilight Aura"
           />
           <button
             onClick={() => {
               setBackgroundType("linear-gradient");
               setGradientAngle(135);
               setGradientStops([
-                { offset: 0, color: "#2C3E50" },
-                { offset: 1, color: "#3498DB" },
+                { offset: 0, color: "#6441A5" },
+                { offset: 1, color: "#2a0845" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
               background: getGradientStyle(
                 [
-                  { offset: 0, color: "#2C3E50" },
-                  { offset: 1, color: "#3498DB" },
+                  { offset: 0, color: "#6441A5" },
+                  { offset: 1, color: "#2a0845" },
                 ],
                 135,
               ),
             }}
-            title="Royal Blue"
+            title="Deep Violet"
           />
           <button
             onClick={() => {
               setBackgroundType("linear-gradient");
-              setGradientAngle(45);
+              setGradientAngle(90);
               setGradientStops([
-                { offset: 0, color: "#4A00E0" },
-                { offset: 1, color: "#8E2DE2" },
+                { offset: 0, color: "#1D976C" },
+                { offset: 1, color: "#93F9B9" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
               background: getGradientStyle(
                 [
-                  { offset: 0, color: "#4A00E0" },
-                  { offset: 1, color: "#8E2DE2" },
+                  { offset: 0, color: "#1D976C" },
+                  { offset: 1, color: "#93F9B9" },
                 ],
-                45,
+                90,
               ),
             }}
-            title="Dark Purple"
+            title="Emerald Flow"
           />
         </div>
       </div>
@@ -528,85 +589,162 @@ const BackgroundControls: React.FC<BackgroundControlsProps> = ({
         </div>
       </div>
 
-      {/* Mesh Gradients */}
+      {/* Modern Mesh Gradients */}
       <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Mesh Gradients</h3>
-        <div className="grid grid-cols-3 gap-2">
+        <h3 className="text-lg font-semibold">Modern Mesh Gradients</h3>
+        <div className="grid grid-cols-5 gap-2">
           <button
             onClick={() => {
               setBackgroundType("radial-gradient");
               setGradientStops([
-                { offset: 0, color: "#000000" },
-                { offset: 0.6, color: "#434343" },
-                { offset: 1, color: "#000000" },
+                { offset: 0, color: "#FF5F6D" },
+                { offset: 1, color: "#FFC371" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
-              background: getRadialGradientStyle([
-                { offset: 0, color: "#000000" },
-                { offset: 0.6, color: "#434343" },
-                { offset: 1, color: "#000000" },
-              ]),
+              background:
+                "radial-gradient(circle at top left, #FF5F6D, transparent 70%), radial-gradient(circle at bottom right, #FFC371, transparent 70%), linear-gradient(to bottom right, #FF5F6D, #FFC371)",
             }}
-            title="Dark Matter"
+            title="Sunset Mesh"
           />
           <button
             onClick={() => {
               setBackgroundType("radial-gradient");
               setGradientStops([
-                { offset: 0, color: "#1F1C2C" },
-                { offset: 0.6, color: "#928DAB" },
-                { offset: 1, color: "#1F1C2C" },
+                { offset: 0, color: "#4158D0" },
+                { offset: 0.5, color: "#C850C0" },
+                { offset: 1, color: "#FFCC70" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
-              background: getRadialGradientStyle([
-                { offset: 0, color: "#1F1C2C" },
-                { offset: 0.6, color: "#928DAB" },
-                { offset: 1, color: "#1F1C2C" },
-              ]),
+              background:
+                "radial-gradient(circle at top left, #4158D0, transparent 70%), radial-gradient(circle at bottom right, #FFCC70, transparent 70%), linear-gradient(to bottom right, #4158D0, #C850C0, #FFCC70)",
             }}
-            title="Dark Mist"
+            title="Cosmic Fusion"
           />
           <button
             onClick={() => {
               setBackgroundType("radial-gradient");
               setGradientStops([
-                { offset: 0, color: "#141E30" },
-                { offset: 0.6, color: "#243B55" },
-                { offset: 1, color: "#141E30" },
+                { offset: 0, color: "#0093E9" },
+                { offset: 1, color: "#80D0C7" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
-              background: getRadialGradientStyle([
-                { offset: 0, color: "#141E30" },
-                { offset: 0.6, color: "#243B55" },
-                { offset: 1, color: "#141E30" },
-              ]),
+              background:
+                "radial-gradient(circle at 30% 30%, #0093E9, transparent 60%), radial-gradient(circle at 70% 70%, #80D0C7, transparent 60%), linear-gradient(to bottom right, #0093E9, #80D0C7)",
             }}
-            title="Royal Navy"
+            title="Azure Radiance"
           />
           <button
             onClick={() => {
               setBackgroundType("radial-gradient");
               setGradientStops([
-                { offset: 0, color: "#0F0C29" },
-                { offset: 0.5, color: "#302B63" },
-                { offset: 1, color: "#24243E" },
+                { offset: 0, color: "#8EC5FC" },
+                { offset: 1, color: "#E0C3FC" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
-              background: getRadialGradientStyle([
-                { offset: 0, color: "#0F0C29" },
-                { offset: 0.5, color: "#302B63" },
-                { offset: 1, color: "#24243E" },
-              ]),
+              background:
+                "radial-gradient(circle at 20% 20%, #8EC5FC, transparent 70%), radial-gradient(circle at 80% 80%, #E0C3FC, transparent 70%), linear-gradient(to bottom right, #8EC5FC, #E0C3FC)",
             }}
-            title="Deep Space"
+            title="Lavender Haze"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#00F260" },
+                { offset: 1, color: "#0575E6" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background:
+                "radial-gradient(circle at 25% 25%, #00F260, transparent 60%), radial-gradient(circle at 75% 75%, #0575E6, transparent 60%), linear-gradient(to bottom right, #00F260, #0575E6)",
+            }}
+            title="Emerald Flow"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#FA8BFF" },
+                { offset: 0.5, color: "#2BD2FF" },
+                { offset: 1, color: "#2BFF88" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background:
+                "radial-gradient(circle at 20% 20%, #FA8BFF, transparent 60%), radial-gradient(circle at 80% 80%, #2BFF88, transparent 60%), radial-gradient(circle at center, #2BD2FF, transparent 60%), linear-gradient(to bottom right, #FA8BFF, #2BD2FF, #2BFF88)",
+            }}
+            title="Neon Spectrum"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#FF3CAC" },
+                { offset: 0.5, color: "#784BA0" },
+                { offset: 1, color: "#2B86C5" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background:
+                "radial-gradient(circle at 30% 30%, #FF3CAC, transparent 60%), radial-gradient(circle at 70% 70%, #2B86C5, transparent 60%), linear-gradient(to bottom right, #FF3CAC, #784BA0, #2B86C5)",
+            }}
+            title="Purple Haze"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#08AEEA" },
+                { offset: 1, color: "#2AF598" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background:
+                "radial-gradient(circle at 25% 25%, #08AEEA, transparent 60%), radial-gradient(circle at 75% 75%, #2AF598, transparent 60%), linear-gradient(to bottom right, #08AEEA, #2AF598)",
+            }}
+            title="Aqua Splash"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#FEE140" },
+                { offset: 1, color: "#FA709A" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background:
+                "radial-gradient(circle at 30% 30%, #FEE140, transparent 60%), radial-gradient(circle at 70% 70%, #FA709A, transparent 60%), linear-gradient(to bottom right, #FEE140, #FA709A)",
+            }}
+            title="Warm Flame"
+          />
+          <button
+            onClick={() => {
+              setBackgroundType("radial-gradient");
+              setGradientStops([
+                { offset: 0, color: "#A9C9FF" },
+                { offset: 1, color: "#FFBBEC" },
+              ]);
+            }}
+            className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
+            style={{
+              background:
+                "radial-gradient(circle at 20% 20%, #A9C9FF, transparent 70%), radial-gradient(circle at 80% 80%, #FFBBEC, transparent 70%), linear-gradient(to bottom right, #A9C9FF, #FFBBEC)",
+            }}
+            title="Pastel Dream"
           />
         </div>
       </div>

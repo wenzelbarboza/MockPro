@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-
-type DeviceType = "basic" | "iphone15";
+import { type DeviceType } from "../InstaCanvas";
 
 interface FrameControlsProps {
   frameColor: string;
@@ -40,7 +39,6 @@ const FrameControls: React.FC<FrameControlsProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-6">
-
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">Frame Settings</h3>
         <div className="space-y-4">
