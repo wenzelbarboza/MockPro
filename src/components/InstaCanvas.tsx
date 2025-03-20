@@ -4,8 +4,7 @@ import React, { useState, useRef, use, type Usable } from "react";
 import BackgroundControls from "./canvas/BackgroundControls";
 import FrameControls from "./canvas/FrameControls";
 import FramePreview from "./canvas/FramePreview";
-import html2canvas from "html2canvas";
-import Image from "next/image";
+import { toPng } from "html-to-image";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
 export type DeviceType = "basic" | "iphone15" | "youtube";
@@ -99,32 +98,12 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
     if (!element) return;
 
     try {
-      const canvas = await html2canvas(element, {
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
-        scale: 2, // Higher quality output
-        onclone: (clonedDoc) => {
-          // Force proper rendering in the cloned document
-          const clonedElement = clonedDoc.getElementById("canvas-content");
-          if (clonedElement) {
-            // Ensure all elements inside are properly positioned
-            const imageElements = clonedElement.querySelectorAll("img");
-            imageElements.forEach((img) => {
-              img.style.position = "absolute";
-              img.style.width = "100%";
-              img.style.height = "100%";
-              img.style.inset = "0";
-              img.style.objectFit = "cover";
-            });
-          }
-        },
-      });
+      // Use html-to-image for better handling of CSS properties
+      const dataUrl = await toPng(element);
 
       // Download the image
-      const dataURL = canvas.toDataURL("image/png", 1.0);
       const link = document.createElement("a");
-      link.href = dataURL;
+      link.href = dataUrl;
       link.download = "instaCanvas.png";
       link.click();
     } catch (error) {

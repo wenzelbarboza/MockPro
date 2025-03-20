@@ -110,7 +110,10 @@ const FramePreview: React.FC<FramePreviewProps> = ({
                     </div>
                   </div>
                 </div>
-                <div className="absolute left-1/2 top-1/2 h-24 w-12 -translate-x-1/2 -translate-y-1/2 bg-zinc-600 blur-[80px]"></div>
+                {/* Only show blur effect when no image is uploaded */}
+                {!children && (
+                  <div className="absolute left-1/2 top-1/2 h-24 w-12 -translate-x-1/2 -translate-y-1/2 bg-zinc-600 blur-[80px]"></div>
+                )}
               </div>
 
               {/* Left Side Buttons */}
