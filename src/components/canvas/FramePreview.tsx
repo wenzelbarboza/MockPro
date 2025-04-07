@@ -4,6 +4,8 @@ import React, { type Dispatch, type SetStateAction, useState } from "react";
 import type { DeviceType } from "../InstaCanvas";
 import getThumbnail from "./getThumbnail";
 import { Button } from "../ui/button";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 interface FramePreviewProps {
   frameColor: string;
@@ -46,15 +48,34 @@ const FramePreview: React.FC<FramePreviewProps> = ({
   };
 
   const renderDeviceFrame = () => {
+    // Enhanced click handler with higher priority
     const handleUploadClick = (e: React.MouseEvent) => {
+      console.log("upload click");
       e.preventDefault();
-      onUploadClick?.();
+      e.stopPropagation();
+      // Ensure the click event is captured
+      if (onUploadClick) {
+        onUploadClick();
+      }
+    };
+
+    // Enhanced touch handler with higher priority
+    const handleTouchEvent = (e: React.TouchEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Ensure the touch event is captured
+      if (onUploadClick) {
+        onUploadClick();
+      }
     };
 
     const uploadPlaceholder = (
       <div
         className="flex h-full w-full cursor-pointer flex-col items-center justify-center bg-zinc-800/10 transition-colors hover:bg-zinc-800/20"
         onClick={handleUploadClick}
+        onTouchStart={handleTouchEvent}
+        role="button"
+        tabIndex={0}
       >
         <svg
           className="h-12 w-12 text-zinc-400"
@@ -91,10 +112,13 @@ const FramePreview: React.FC<FramePreviewProps> = ({
     switch (deviceType) {
       case "iphone15":
         return (
-          <div className="flex items-center justify-center">
+          <div className="pointer-events-auto z-30 flex items-center justify-center">
             <div
               className="relative h-[600px] w-72 rounded-[45px] border-8 border-zinc-900 shadow-[0_0_2px_2px_rgba(255,255,255,0.1)]"
-              style={{ transform: `scale(${frameSize / 600})` }}
+              style={{
+                transform: `scale(${frameSize / 600})`,
+                pointerEvents: "auto",
+              }}
             >
               {/* Dynamic Island */}
               <div className="absolute left-1/2 top-2 z-20 h-[25px] w-[90px] -translate-x-1/2 transform rounded-full bg-zinc-900"></div>
@@ -105,7 +129,11 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               <div className="relative h-full w-full overflow-hidden rounded-[37px] bg-zinc-900/10">
                 <div className="absolute inset-[-3px] overflow-hidden rounded-[37px]">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-[calc(100%_+_6px)] w-full">
+                    <div
+                      className="h-[calc(100%_+_6px)] w-full"
+                      onClick={!children ? handleUploadClick : undefined}
+                      onTouchStart={!children ? handleTouchEvent : undefined}
+                    >
                       {children ?? uploadPlaceholder}
                     </div>
                   </div>
@@ -131,12 +159,13 @@ const FramePreview: React.FC<FramePreviewProps> = ({
       case "youtube":
         return (
           <div
-            className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+            className="pointer-events-auto absolute left-1/2 top-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
             style={{
               height: `${children ? "auto" : frameSize}px`,
               width: `${children ? "auto" : frameSize}px`,
               maxWidth: "100%",
               maxHeight: "100%",
+              pointerEvents: "auto",
             }}
           >
             <div
@@ -144,6 +173,10 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               style={{
                 clipPath: `inset(90px 0 90px 0 round 10px)`,
               }}
+              onClick={!children ? handleUploadClick : undefined}
+              onTouchStart={!children ? handleTouchEvent : undefined}
+              role={!children ? "button" : undefined}
+              tabIndex={!children ? 0 : undefined}
             >
               {children ?? ytLinkPlaceholder}
             </div>
@@ -152,7 +185,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
       default:
         return (
           <div
-            className="absolute"
+            className="pointer-events-auto absolute z-30"
             style={{
               border: `${frameThickness}px solid ${frameColor}`,
               width: `${frameSize}px`,
@@ -160,7 +193,12 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               left: `calc(50% - ${frameSize / 2}px)`,
               top: `calc(50% - ${frameSize / 2}px)`,
               backgroundColor: frameColor,
+              pointerEvents: "auto",
             }}
+            onClick={!children ? handleUploadClick : undefined}
+            onTouchStart={!children ? handleTouchEvent : undefined}
+            role={!children ? "button" : undefined}
+            tabIndex={!children ? 0 : undefined}
           >
             <div className="absolute inset-0 overflow-hidden">
               {children ?? uploadPlaceholder}
@@ -171,14 +209,26 @@ const FramePreview: React.FC<FramePreviewProps> = ({
   };
 
   return (
-    <div
-      className="absolute inset-0"
-      style={{
-        transform: `perspective(1000px) rotateX(${frameTiltX}deg) rotateY(${frameTiltY}deg) rotate(${frameRotation}deg)`,
-      }}
-    >
-      {renderDeviceFrame()}
-    </div>
+    <>
+      {/* Back Button - Moved outside the transformed container */}
+      <Link
+        href="/"
+        className="fixed left-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-background/80 text-foreground shadow-md backdrop-blur-sm transition-transform hover:scale-110 md:left-8 md:top-8"
+        aria-label="Back to home"
+      >
+        <ArrowLeft size={20} />
+      </Link>
+
+      <div
+        className="pointer-events-auto absolute inset-0 z-40"
+        style={{
+          transform: `perspective(1000px) rotateX(${frameTiltX}deg) rotateY(${frameTiltY}deg) rotate(${frameRotation}deg)`,
+          pointerEvents: "auto", // Ensure pointer events are explicitly enabled
+        }}
+      >
+        {renderDeviceFrame()}
+      </div>
+    </>
   );
 };
 
