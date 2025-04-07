@@ -26,12 +26,6 @@ const Home: React.FC = () => {
       link: "frame/iphone15",
       content: "This is a basic iPhone frame for your image.",
     },
-    {
-      imageSrc: "/placeholder.svg?height=200&width=300",
-      title: "youtube",
-      link: "frame/youtube",
-      content: "This is a basic yotube frame for your image.",
-    },
   ];
 
   return (

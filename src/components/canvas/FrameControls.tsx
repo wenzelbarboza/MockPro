@@ -51,7 +51,6 @@ const FrameControls: React.FC<FrameControlsProps> = ({
             >
               <option value="basic">Basic Frame</option>
               <option value="iphone15">iPhone 15</option>
-              <option value="youtube">youtube</option>
             </select>
           </div>
           <div className="flex items-center gap-2">
