@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, use, type Usable } from "react";
+import React, { useState, useRef } from "react";
 import BackgroundControls from "./canvas/BackgroundControls";
 import FrameControls from "./canvas/FrameControls";
 import FramePreview from "./canvas/FramePreview";
@@ -37,9 +37,7 @@ type InstaCanvasProps = {
 const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { type } = use<{ type: DeviceType }>(
-    params as unknown as Usable<{ type: DeviceType }>,
-  );
+  const { type } = params;
 
   console.log("type: ", type);
 
