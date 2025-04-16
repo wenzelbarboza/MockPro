@@ -91,7 +91,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
     switch (deviceType) {
       case "iphone15":
         return (
-          <div className="flex items-center justify-center">
+          <div className="flex h-full w-full items-center justify-center">
             <div
               className="relative h-[600px] w-72 rounded-[45px] border-8 border-zinc-900 shadow-[0_0_2px_2px_rgba(255,255,255,0.1)]"
               style={{ transform: `scale(${frameSize / 600})` }}
