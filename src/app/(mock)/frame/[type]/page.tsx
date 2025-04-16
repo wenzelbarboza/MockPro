@@ -1,20 +1,19 @@
-"use client";
 import dynamic from "next/dynamic";
 import React from "react";
 import type { DeviceType } from "../../../../components/InstaCanvas";
+import InstaCanvas from "../../../../components/InstaCanvas";
 
-const InstaCanvas = dynamic(
-  () => import("../../../../components/InstaCanvas"),
-  {
-    ssr: false,
-  },
-);
+const Instagram = async ({
+  params,
+}: {
+  params: Promise<{ type: DeviceType }>;
+}) => {
+  const deviceType = await params;
 
-const Instagram = ({ params }: { params: { type: DeviceType } }) => {
   return (
     <>
       <div className="flex h-svh w-full items-center justify-center">
-        <InstaCanvas params={params} />
+        <InstaCanvas params={deviceType} />
       </div>
     </>
   );

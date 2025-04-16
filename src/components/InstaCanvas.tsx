@@ -38,12 +38,7 @@ type InstaCanvasProps = {
 
 const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const { type } = use<{ type: DeviceType }>(
-    params as unknown as Usable<{ type: DeviceType }>,
-  );
-
-  console.log("type: ", type);
+  const { type } = params;
 
   const [activeTab, setActiveTab] = useState<"background" | "frame">(
     "background",
