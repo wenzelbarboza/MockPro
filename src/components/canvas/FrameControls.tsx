@@ -2,6 +2,7 @@
 
 import React from "react";
 import { type DeviceType } from "../InstaCanvas";
+import { redirect } from "next/navigation";
 
 interface FrameControlsProps {
   frameColor: string;
@@ -37,6 +38,17 @@ const FrameControls: React.FC<FrameControlsProps> = ({
   deviceType,
   setDeviceType,
 }) => {
+  const handleDeviceTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newDeviceType = e.target.value as DeviceType;
+    setDeviceType(newDeviceType);
+    if (newDeviceType === "basic") {
+      setFrameSize(200);
+    } else if (newDeviceType === "iphone15") {
+      setFrameSize(300);
+    }
+    redirect(`/frame/${newDeviceType}`);
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
@@ -46,11 +58,12 @@ const FrameControls: React.FC<FrameControlsProps> = ({
             <label className="w-24 text-sm">Device:</label>
             <select
               value={deviceType}
-              onChange={(e) => setDeviceType(e.target.value as DeviceType)}
+              onChange={handleDeviceTypeChange}
               className="flex-1 rounded border border-gray-300 p-2"
             >
               <option value="basic">Basic Frame</option>
               <option value="iphone15">iPhone 15</option>
+              <option value="youtube">youtube</option>
             </select>
           </div>
           <div className="flex items-center gap-2">

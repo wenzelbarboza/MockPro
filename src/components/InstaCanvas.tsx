@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, use, type Usable } from "react";
+import React, { useState, useRef } from "react";
 import BackgroundControls from "./canvas/BackgroundControls";
 import FrameControls from "./canvas/FrameControls";
 import FramePreview from "./canvas/FramePreview";
@@ -9,7 +9,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,

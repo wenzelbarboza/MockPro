@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import React from "react";
 import type { DeviceType } from "../../../../components/InstaCanvas";
 import InstaCanvas from "../../../../components/InstaCanvas";
