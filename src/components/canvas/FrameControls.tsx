@@ -96,7 +96,7 @@ const FrameControls: React.FC<FrameControlsProps> = ({
             <label className="w-24 text-sm">Size:</label>
             <input
               type="range"
-              min={deviceType === "iphone15" ? 300 : 200}
+              min={deviceType === "iphone15" ? 200 : 100}
               max={deviceType === "iphone15" ? 800 : 600}
               value={frameSize}
               onChange={(e) => setFrameSize(Number(e.target.value))}
