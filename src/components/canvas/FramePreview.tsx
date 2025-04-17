@@ -94,7 +94,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
     );
 
     const qrTextPlaceholder = (
-      <div className="flex h-full w-full items-center justify-center bg-yellow-300">
+      <div className="flex h-full w-full items-center justify-center rounded-lg bg-yellow-300">
         <input
           type="text"
           placeholder="text for qr code"
@@ -173,12 +173,12 @@ const FramePreview: React.FC<FramePreviewProps> = ({
             <div
               className="absolute"
               style={{
-                border: `${frameThickness}px solid ${frameColor}`,
+                border: `${children ? frameThickness : 0}px solid ${frameColor}`,
                 width: `${frameSize}px`,
                 height: `${frameSize}px`,
                 left: `calc(50% - ${frameSize / 2}px)`,
                 top: `calc(50% - ${frameSize / 2}px)`,
-                backgroundColor: frameColor,
+                backgroundColor: children ? frameColor : "transparent",
               }}
             >
               <div className="absolute inset-0 overflow-hidden">

@@ -16,6 +16,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button, buttonVariants } from "./ui/button";
+import Link from "next/link";
+import { ChevronLeft, House } from "lucide-react";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
 export type DeviceType = "basic" | "iphone15" | "youtube" | "qrcode";
@@ -338,6 +340,13 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
           </DrawerContent>
         </Drawer>
       </div>
+
+      <Link href="/">
+        <Button className="absolute left-4 top-4">
+          <House />
+          home
+        </Button>
+      </Link>
     </div>
   );
 };

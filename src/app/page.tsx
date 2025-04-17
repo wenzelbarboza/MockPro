@@ -29,7 +29,7 @@ const Home: React.FC = () => {
     {
       imageSrc: "/placeholder.svg?height=200&width=300",
       title: "youtube",
-      link: "frame/iphone15",
+      link: "frame/youtube",
       content: "This is a basic youtube frame for your image.",
     },
     {
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
         <h1 className="mb-8 text-center text-3xl font-bold">
           Welcome to MockPro
         </h1>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {cards.map((card, index) => (
             <Card key={index}>
               <CardHeader className="p-0">
