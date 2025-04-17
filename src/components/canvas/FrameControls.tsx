@@ -62,8 +62,9 @@ const FrameControls: React.FC<FrameControlsProps> = ({
               className="flex-1 rounded border border-gray-300 p-2"
             >
               <option value="basic">Basic Frame</option>
+              <option value="qrcode">Qr Generator</option>
               <option value="iphone15">iPhone 15</option>
-              <option value="youtube">youtube</option>
+              <option value="youtube">Youtube</option>
             </select>
           </div>
           <div className="flex items-center gap-2">

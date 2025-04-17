@@ -16,6 +16,7 @@ interface FramePreviewProps {
   children?: React.ReactNode;
   onUploadClick?: () => void;
   setUploadedImage?: Dispatch<SetStateAction<string | null>>;
+  setQrtext: Dispatch<SetStateAction<string>>;
 }
 
 const FramePreview: React.FC<FramePreviewProps> = ({
@@ -29,20 +30,24 @@ const FramePreview: React.FC<FramePreviewProps> = ({
   children,
   onUploadClick,
   setUploadedImage,
+  setQrtext,
 }) => {
   const [ytUrl, setYtUrl] = useState("");
+  const [qrtextLocal, setQrtextLocal] = useState("");
   const [ytUrlError, setYtUrlError] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
   // "https://www.youtube.com/watch?v=I2Bgi0Qcdvc"
   const handleYtSubmit = async () => {
     const ytImg = await getThumbnail(ytUrl);
     if (ytImg.success) {
-      setImgUrl(ytImg.payload);
       setUploadedImage?.(ytImg.payload);
     } else {
       setYtUrlError(ytImg.payload);
     }
     console.log("urlis: ", ytImg);
+  };
+
+  const handleQrSubmit = () => {
+    setQrtext(qrtextLocal);
   };
 
   const renderDeviceFrame = () => {
@@ -84,6 +89,19 @@ const FramePreview: React.FC<FramePreviewProps> = ({
           onChange={(e) => setYtUrl(e.target.value)}
         />
         <Button onClick={handleYtSubmit}>get thumbnail</Button>
+        {ytUrlError && <span className="text-red-500">{ytUrlError}</span>}
+      </div>
+    );
+
+    const qrTextPlaceholder = (
+      <div className="flex h-full w-full items-center justify-center bg-yellow-300">
+        <input
+          type="text"
+          placeholder="text for qr code"
+          value={qrtextLocal}
+          onChange={(e) => setQrtextLocal(e.target.value)}
+        />
+        <Button onClick={handleQrSubmit}>generat Qr</Button>
         {ytUrlError && <span className="text-red-500">{ytUrlError}</span>}
       </div>
     );
@@ -148,6 +166,26 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               {children ?? ytLinkPlaceholder}
             </div>
           </div>
+        );
+      case "qrcode":
+        return (
+          <>
+            <div
+              className="absolute"
+              style={{
+                border: `${frameThickness}px solid ${frameColor}`,
+                width: `${frameSize}px`,
+                height: `${frameSize}px`,
+                left: `calc(50% - ${frameSize / 2}px)`,
+                top: `calc(50% - ${frameSize / 2}px)`,
+                backgroundColor: frameColor,
+              }}
+            >
+              <div className="absolute inset-0 overflow-hidden">
+                {children ?? qrTextPlaceholder}
+              </div>
+            </div>
+          </>
         );
       default:
         return (

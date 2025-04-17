@@ -29,8 +29,14 @@ const Home: React.FC = () => {
     {
       imageSrc: "/placeholder.svg?height=200&width=300",
       title: "youtube",
-      link: "frame/youtube",
+      link: "frame/iphone15",
       content: "This is a basic youtube frame for your image.",
+    },
+    {
+      imageSrc: "/placeholder.svg?height=200&width=300",
+      title: "qrcode",
+      link: "frame/qrcode",
+      content: "Generate a QR code for your text.",
     },
   ];
 

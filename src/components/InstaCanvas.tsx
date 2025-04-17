@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import BackgroundControls from "./canvas/BackgroundControls";
 import FrameControls from "./canvas/FrameControls";
 import FramePreview from "./canvas/FramePreview";
 import { toPng } from "html-to-image";
+import QRCode from "qrcode";
 import {
   Drawer,
   DrawerClose,
@@ -17,7 +18,7 @@ import {
 import { Button, buttonVariants } from "./ui/button";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
-export type DeviceType = "basic" | "iphone15" | "youtube";
+export type DeviceType = "basic" | "iphone15" | "youtube" | "qrcode";
 
 interface GradientStop {
   offset: number;
@@ -30,14 +31,12 @@ const DEFAULT_GRADIENT_STOPS: GradientStop[] = [
 ];
 
 type InstaCanvasProps = {
-  params: {
-    type: DeviceType;
-  };
+  type: DeviceType;
 };
 
-const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
+const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { type } = params;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [activeTab, setActiveTab] = useState<"background" | "frame">(
     "background",
@@ -56,6 +55,7 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [deviceType, setDeviceType] = useState<DeviceType>(type);
   const [frameSize, setFrameSize] = useState(deviceType == "basic" ? 200 : 300);
+  const [qrtext, setQrtext] = useState("");
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -115,6 +115,34 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
       console.error("Error downloading canvas:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("QR code effect");
+    console.log("device type is ", deviceType);
+    console.log("qrtext is ", qrtext);
+    console.log("canvas ref is ", canvasRef.current);
+
+    // Add a small delay to ensure the canvas element is rendered
+    const timer = setTimeout(() => {
+      if (qrtext && deviceType === "qrcode" && canvasRef.current) {
+        console.log(
+          "Attempting to generate QR code with canvas:",
+          canvasRef.current,
+        );
+        QRCode.toCanvas(
+          canvasRef.current,
+          qrtext || "https://example.com",
+          function (error) {
+            console.log("inside qrcode canvas method");
+            if (error) console.error("QR code error:", error);
+            else console.log("QR code generated successfully!");
+          },
+        );
+      }
+    }, 100); // Small delay to ensure DOM is ready
+
+    return () => clearTimeout(timer);
+  }, [qrtext, deviceType, canvasRef]);
 
   const controlsPannel = () => {
     return (
@@ -197,6 +225,47 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
     );
   };
 
+  const handeFrame = () => {
+    // Always render the canvas for QR code regardless of uploadedImage
+    if (deviceType === "qrcode" && qrtext) {
+      console.log("Rendering QR code canvas");
+      // Use useEffect to ensure the canvas is rendered before trying to draw on it
+      return (
+        <div className="flex h-full w-full items-stretch justify-stretch">
+          <canvas
+            id="QrCodeCanvas"
+            ref={canvasRef}
+            style={{ width: "100%", height: "100%" }}
+          ></canvas>
+        </div>
+      );
+    }
+
+    // For other device types, only render if there's an uploaded image
+    if (uploadedImage) {
+      if (deviceType === "youtube") {
+        return (
+          <img
+            src={uploadedImage}
+            alt="Uploaded"
+            className="h-full w-full object-contain"
+            style={{ display: "block", position: "absolute", inset: "0" }}
+          />
+        );
+      } else {
+        return (
+          <img
+            src={uploadedImage}
+            alt="Uploaded"
+            className="h-full w-full object-cover"
+            style={{ display: "block", position: "absolute", inset: "0" }}
+          />
+        );
+      }
+    }
+    return null;
+  };
+
   return (
     <div className="relative flex h-screen w-full overflow-hidden">
       {/* Preview Area - Left Side */}
@@ -216,8 +285,10 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
             deviceType={deviceType}
             onUploadClick={handleUploadClick}
             setUploadedImage={setUploadedImage}
+            setQrtext={setQrtext}
           >
-            {uploadedImage && deviceType === "youtube" ? (
+            {handeFrame()}
+            {/* {uploadedImage && deviceType === "youtube" ? (
               <img
                 src={uploadedImage}
                 alt="Uploaded"
@@ -233,7 +304,7 @@ const InstaCanvas = ({ params }: InstaCanvasProps): JSX.Element => {
                   style={{ display: "block", position: "absolute", inset: "0" }}
                 />
               )
-            )}
+            )} */}
           </FramePreview>
         </div>
       </div>

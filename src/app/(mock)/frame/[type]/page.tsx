@@ -7,12 +7,12 @@ const Instagram = async ({
 }: {
   params: Promise<{ type: DeviceType }>;
 }) => {
-  const deviceType = await params;
+  const deviceType = (await params).type;
 
   return (
     <>
       <div className="flex h-svh w-full items-center justify-center">
-        <InstaCanvas params={deviceType} />
+        <InstaCanvas type={deviceType} />
       </div>
     </>
   );
