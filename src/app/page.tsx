@@ -14,26 +14,29 @@ import Link from "next/link";
 const Home: React.FC = () => {
   const cards = [
     {
-      imageSrc: "/placeholder.svg?height=200&width=300",
+      imageSrc:
+        "https://res.cloudinary.com/del6v0im5/image/upload/v1745128242/basic_frame_sgxdgi.png",
       title: "Frame",
       link: "/frame/basic",
-      content:
-        "This is a basic frame for your image. You can customize it to your liking.",
+      content: "This is a basic frame for your image.",
     },
     {
-      imageSrc: "/placeholder.svg?height=200&width=300",
+      imageSrc:
+        "https://res.cloudinary.com/del6v0im5/image/upload/v1745129403/iphoneImg_2_garjcz.png",
       title: "iPhone",
       link: "frame/iphone15",
-      content: "This is a basic iPhone frame for your image.",
+      content: "This is a iPhone frame for your image.",
     },
     {
-      imageSrc: "/placeholder.svg?height=200&width=300",
+      imageSrc:
+        "https://res.cloudinary.com/del6v0im5/image/upload/v1745128241/yt_frame_wzcuqb.png",
       title: "youtube",
       link: "frame/youtube",
-      content: "This is a basic youtube frame for your image.",
+      content: "This is a youtube frame for your image.",
     },
     {
-      imageSrc: "/placeholder.svg?height=200&width=300",
+      imageSrc:
+        "https://res.cloudinary.com/del6v0im5/image/upload/v1745128241/qr_fm8rb0.png",
       title: "qrcode",
       link: "frame/qrcode",
       content: "Generate a QR code for your text.",
@@ -51,12 +54,15 @@ const Home: React.FC = () => {
             <Card key={index}>
               <CardHeader className="p-0">
                 <div className="relative h-48 w-full">
-                  <Image
-                    src={card.imageSrc || "/placeholder.svg"}
-                    alt={card.title}
-                    layout="fill"
-                    objectFit="cover"
-                  />
+                  <Link href={card.link}>
+                    <Image
+                      src={card.imageSrc || "/placeholder.svg"}
+                      alt={card.title}
+                      fill={true}
+                      objectFit="cover"
+                      className="hover:contrast-110 object-cover transition-all duration-300 hover:brightness-75"
+                    />
+                  </Link>
                 </div>
               </CardHeader>
               <CardContent className="p-4">
@@ -64,9 +70,9 @@ const Home: React.FC = () => {
                 <p className="text-muted-foreground">{card.content}</p>
               </CardContent>
               <CardFooter>
-                <Link href={card.link} className="w-full">
+                {/* <Link href={card.link} className="w-full">
                   <Button className="w-full">View</Button>
-                </Link>
+                </Link> */}
               </CardFooter>
             </Card>
           ))}
