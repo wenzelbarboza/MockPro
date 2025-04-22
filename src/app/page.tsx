@@ -41,6 +41,14 @@ const Home: React.FC = () => {
       link: "frame/qrcode",
       content: "Generate a QR code for your text.",
     },
+    {
+      imageSrc:
+        "https://res.cloudinary.com/del6v0im5/image/upload/v1745299812/testimonial_frame_mwymgk.png",
+
+      title: "Testimonial",
+      link: "frame/testimonial",
+      content: "Create a beautiful testimonial frame.",
+    },
   ];
 
   return (
@@ -51,7 +59,7 @@ const Home: React.FC = () => {
         </h1>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {cards.map((card, index) => (
-            <Card key={index}>
+            <Card key={index} className="overflow-hidden">
               <CardHeader className="p-0">
                 <div className="relative h-48 w-full">
                   <Link href={card.link}>

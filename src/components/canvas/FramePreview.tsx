@@ -1,9 +1,17 @@
 "use client";
 
-import React, { type Dispatch, type SetStateAction, useState } from "react";
+import React, {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import type { DeviceType } from "../InstaCanvas";
 import getThumbnail from "./getThumbnail";
 import { Button } from "../ui/button";
+import { set } from "zod";
+import { Star } from "lucide-react";
 
 interface FramePreviewProps {
   frameColor: string;
@@ -35,7 +43,12 @@ const FramePreview: React.FC<FramePreviewProps> = ({
   const [ytUrl, setYtUrl] = useState("");
   const [qrtextLocal, setQrtextLocal] = useState("");
   const [ytUrlError, setYtUrlError] = useState("");
-  // "https://www.youtube.com/watch?v=I2Bgi0Qcdvc"
+  const [testimonialTitle, setTestimonialTitle] = useState("Robert");
+  const [testimonialContent, setTestimonialContent] =
+    useState("I love this app");
+  const [stars, setStars] = useState(3);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const handleYtSubmit = async () => {
     const ytImg = await getThumbnail(ytUrl);
     if (ytImg.success) {
@@ -49,6 +62,18 @@ const FramePreview: React.FC<FramePreviewProps> = ({
   const handleQrSubmit = () => {
     setQrtext(qrtextLocal);
   };
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [testimonialContent]);
 
   const renderDeviceFrame = () => {
     const handleUploadClick = (e: React.MouseEvent) => {
@@ -102,9 +127,55 @@ const FramePreview: React.FC<FramePreviewProps> = ({
           onChange={(e) => setQrtextLocal(e.target.value)}
         />
         <Button onClick={handleQrSubmit}>generat Qr</Button>
-        {ytUrlError && <span className="text-red-500">{ytUrlError}</span>}
       </div>
     );
+
+    const TestimonialView = () => {
+      return (
+        <div className="flex h-full w-full flex-col items-center justify-center rounded-md border-[1px] bg-white shadow-lg">
+          <div className="w-full px-4 py-3">
+            <input
+              type="text"
+              name="Name"
+              id="name"
+              placeholder="Enter title"
+              className="w-full border-none text-xl font-medium outline-none"
+              onChange={(e) => setTestimonialTitle(e.target.value)}
+              value={testimonialTitle}
+            />
+
+            <div className="my-2 flex gap-1">
+              {Array.from({ length: 5 }, (_, i) => {
+                return (
+                  <div
+                    key={i}
+                    onClick={() => setStars(i + 1)}
+                    className="cursor-pointer"
+                  >
+                    <Star
+                      className="h-5 w-5 text-[#ffc107]"
+                      fill={i < stars ? "#ffc107" : "transparent"}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            <textarea
+              ref={textareaRef}
+              name="Content"
+              id="content"
+              placeholder="Write your testimonial here..."
+              onChange={(e) => setTestimonialContent(e.target.value)}
+              value={testimonialContent}
+              className="w-full overflow-hidden border-none outline-none"
+              style={{ resize: "none" }}
+              rows={1}
+            />
+          </div>
+        </div>
+      );
+    };
 
     switch (deviceType) {
       case "iphone15":
@@ -184,6 +255,24 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               <div className="absolute inset-0 overflow-hidden">
                 {children ?? qrTextPlaceholder}
               </div>
+            </div>
+          </>
+        );
+      case "testimonial":
+        return (
+          <>
+            <div
+              className="absolute"
+              style={{
+                border: `${children ? frameThickness : 0}px solid ${frameColor}`,
+                width: `${frameSize}px`,
+                height: `${frameSize}px`,
+                left: `calc(50% - ${frameSize / 2}px)`,
+                top: `calc(50% - ${frameSize / 2}px)`,
+                backgroundColor: children ? frameColor : "transparent",
+              }}
+            >
+              <div className="absolute inset-0">{TestimonialView()}</div>
             </div>
           </>
         );

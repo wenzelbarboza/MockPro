@@ -20,7 +20,12 @@ import Link from "next/link";
 import { ChevronLeft, House } from "lucide-react";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
-export type DeviceType = "basic" | "iphone15" | "youtube" | "qrcode";
+export type DeviceType =
+  | "basic"
+  | "iphone15"
+  | "youtube"
+  | "qrcode"
+  | "testimonial";
 
 interface GradientStop {
   offset: number;
