@@ -9,6 +9,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Rocket,
   type LucideIcon,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -26,6 +27,7 @@ interface SidebarProps {
 
 const navItems: NavItem[] = [
   { icon: Home, text: "Home", href: "/" },
+  { icon: Rocket, text: "About", href: "/about" },
   { icon: User, text: "Profile", href: "/profile" },
   { icon: Settings, text: "Settings", href: "/settings" },
 ];

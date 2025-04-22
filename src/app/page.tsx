@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import ToolCard from "@/components/ToolCard";
 
 const Home: React.FC = () => {
   const cards = [
@@ -53,11 +54,11 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-      <div className="p-6">
+      <div className="mb-8 p-6">
         <h1 className="mb-8 text-center text-3xl font-bold">
           Welcome to MockPro
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {cards.map((card, index) => (
             <Card key={index} className="overflow-hidden">
               <CardHeader className="p-0">
@@ -84,6 +85,12 @@ const Home: React.FC = () => {
               </CardFooter>
             </Card>
           ))}
+        </div>
+        <div>
+          <h3 className="mb-4 text-2xl font-medium">Tools</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <ToolCard />
+          </div>
         </div>
       </div>
     </Layout>
