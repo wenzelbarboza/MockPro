@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleCollapse }) => {
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-screen bg-gray-800 text-white transition-all duration-300 ${
+      className={`fixed left-0 top-0 z-10 h-screen bg-gray-800 text-white transition-all duration-300 ${
         isCollapsed ? "w-16" : "w-64"
       }`}
     >
