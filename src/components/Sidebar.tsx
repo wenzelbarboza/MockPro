@@ -11,6 +11,8 @@ import {
   ChevronRight,
   Rocket,
   type LucideIcon,
+  PocketKnife,
+  Frame,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -27,8 +29,10 @@ interface SidebarProps {
 
 const navItems: NavItem[] = [
   { icon: Home, text: "Home", href: "/" },
-  { icon: Rocket, text: "About", href: "/about" },
+  { icon: Rocket, text: "Dashboard", href: "/main" },
   { icon: User, text: "Profile", href: "/profile" },
+  { icon: Frame, text: "Frames", href: "/main/frames" },
+  { icon: PocketKnife, text: "Tools", href: "/main/tools" },
   { icon: Settings, text: "Settings", href: "/settings" },
 ];
 

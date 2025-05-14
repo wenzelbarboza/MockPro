@@ -18,6 +18,11 @@ const ToolCard = () => {
       link: "/img-convert",
       content: "Convert images to different formats.",
     },
+    {
+      title: "Goodle search Mock",
+      link: "/google-search",
+      content: "Mockup of Google search page.",
+    },
   ];
 
   const handleNavigate = (link: string) => {
