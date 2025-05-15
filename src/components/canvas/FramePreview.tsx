@@ -10,7 +10,6 @@ import React, {
 import type { DeviceType } from "../InstaCanvas";
 import getThumbnail from "./getThumbnail";
 import { Button } from "../ui/button";
-import { set } from "zod";
 import { Star } from "lucide-react";
 
 interface FramePreviewProps {
@@ -106,9 +105,10 @@ const FramePreview: React.FC<FramePreviewProps> = ({
     );
 
     const ytLinkPlaceholder = (
-      <div className="flex h-full w-full items-center justify-center bg-yellow-300">
+      <div className="flex h-full w-full flex-col justify-center gap-3 bg-yellow-300 p-6">
         <input
           type="text"
+          className="rounded-md p-2"
           placeholder="paste youtube video text here"
           value={ytUrl}
           onChange={(e) => setYtUrl(e.target.value)}
@@ -119,10 +119,11 @@ const FramePreview: React.FC<FramePreviewProps> = ({
     );
 
     const qrTextPlaceholder = (
-      <div className="flex h-full w-full items-center justify-center rounded-lg bg-yellow-300">
+      <div className="flex h-full w-full flex-col justify-center gap-3 rounded-lg bg-yellow-300 p-6">
         <input
           type="text"
           placeholder="text for qr code"
+          className="rounded-md p-2"
           value={qrtextLocal}
           onChange={(e) => setQrtextLocal(e.target.value)}
         />
@@ -231,7 +232,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
             <div
               className="h-full w-full overflow-visible"
               style={{
-                clipPath: `inset(90px 0 90px 0 round 10px)`,
+                clipPath: `inset(22% 0 22% 0 round 10px)`,
               }}
             >
               {children ?? ytLinkPlaceholder}

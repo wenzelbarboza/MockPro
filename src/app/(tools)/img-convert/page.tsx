@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { toPng, toJpeg, toSvg, toBlob } from "html-to-image";
 import { ArrowLeft, Download, Upload, Image as ImageIcon } from "lucide-react";
@@ -180,7 +180,7 @@ const ImageConvert = () => {
           <Link href="/">
             <Button variant="ghost" className="flex items-center gap-2">
               <ArrowLeft size={18} />
-              <span>Back to Home</span>
+              <span>Back to Dashboard</span>
             </Button>
           </Link>
           <h1 className="text-center text-2xl font-bold text-gray-800 md:text-3xl">

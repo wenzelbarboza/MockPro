@@ -9,7 +9,7 @@ import {
 
 import Link from "next/link";
 import Image from "next/image";
-import { cards } from "../page";
+import { cards } from "@/lib/cards";
 
 const Frames = () => {
   return (

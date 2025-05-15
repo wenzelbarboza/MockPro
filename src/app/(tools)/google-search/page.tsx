@@ -3,6 +3,8 @@ import { Search, Moon, Sun, Download, X, Mic, Camera } from "lucide-react";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { handleDownload } from "@/lib/download";
+import DashBoardBtn from "@/components/ui/dashBoardBtn";
 
 const GoogleSearch = () => {
   const [searchQuery, setSearchQuery] = useState("my search");
@@ -38,7 +40,7 @@ const GoogleSearch = () => {
 
   return (
     <>
-      <div className="flex min-h-screen w-full flex-col items-center bg-background pt-8 font-sans text-foreground">
+      <div className="relative mb-10 flex min-h-screen w-full flex-col items-center bg-background pt-8 font-sans text-foreground">
         {/* Theme Toggle Button - Moved outside and above the frame */}
         <div className="mb-4 flex w-full max-w-3xl justify-end gap-2 px-4 md:px-6">
           {mounted && (
@@ -53,7 +55,10 @@ const GoogleSearch = () => {
         </div>
 
         {/* Main content frame */}
-        <div className="w-full max-w-3xl rounded-lg border border-gray-300 bg-card p-4 shadow-lg dark:border-gray-700 md:p-6">
+        <div
+          className="w-full max-w-3xl rounded-lg border border-gray-300 bg-card p-4 shadow-lg dark:border-gray-700 md:p-6"
+          id="google-frame"
+        >
           {/* Google Logo and Search Bar */}
           <div className="m-auto mb-6 flex w-full max-w-2xl flex-col items-center px-4">
             <Image
@@ -155,13 +160,14 @@ const GoogleSearch = () => {
         {/* Download Button Section */}
         <div className="mt-6 flex w-full justify-center">
           <button
-            onClick={() => alert("Download functionality to be implemented")}
+            onClick={() => handleDownload("google-frame")}
             className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           >
             <Download size={18} />
             Download Page
           </button>
         </div>
+        <DashBoardBtn />
       </div>
     </>
   );

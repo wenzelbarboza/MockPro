@@ -5,8 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  User,
-  Settings,
   ChevronLeft,
   ChevronRight,
   Rocket,
@@ -30,10 +28,10 @@ interface SidebarProps {
 const navItems: NavItem[] = [
   { icon: Home, text: "Home", href: "/" },
   { icon: Rocket, text: "Dashboard", href: "/main" },
-  { icon: User, text: "Profile", href: "/profile" },
+  // { icon: User, text: "Profile", href: "/profile" },
   { icon: Frame, text: "Frames", href: "/main/frames" },
   { icon: PocketKnife, text: "Tools", href: "/main/tools" },
-  { icon: Settings, text: "Settings", href: "/settings" },
+  // { icon: Settings, text: "Settings", href: "/settings" },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleCollapse }) => {

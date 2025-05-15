@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import BackgroundControls from "./canvas/BackgroundControls";
 import FrameControls from "./canvas/FrameControls";
 import FramePreview from "./canvas/FramePreview";
-import { toPng } from "html-to-image";
 import QRCode from "qrcode";
 import {
   Drawer,
@@ -16,8 +15,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button, buttonVariants } from "./ui/button";
-import Link from "next/link";
-import { ChevronLeft, House } from "lucide-react";
+import { handleDownload } from "@/lib/download";
+import DashBoardBtn from "./ui/dashBoardBtn";
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
 export type DeviceType =
@@ -103,24 +102,6 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
     }
 
     return {};
-  };
-
-  const handleDownload = async () => {
-    const element = document.getElementById("canvas-content");
-    if (!element) return;
-
-    try {
-      // Use html-to-image for better handling of CSS properties
-      const dataUrl = await toPng(element);
-
-      // Download the image
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "instaCanvas.png";
-      link.click();
-    } catch (error) {
-      console.error("Error downloading canvas:", error);
-    }
   };
 
   useEffect(() => {
@@ -223,7 +204,7 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
 
         {/* Download Button */}
         <button
-          onClick={handleDownload}
+          onClick={() => handleDownload("canvas-content")}
           className="mt-4 rounded-lg bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
         >
           Download Image
@@ -232,7 +213,7 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
     );
   };
 
-  const handeFrame = () => {
+  const handleFrame = () => {
     // Always render the canvas for QR code regardless of uploadedImage
     if (deviceType === "qrcode" && qrtext) {
       console.log("Rendering QR code canvas");
@@ -294,7 +275,7 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
             setUploadedImage={setUploadedImage}
             setQrtext={setQrtext}
           >
-            {handeFrame()}
+            {handleFrame()}
             {/* {uploadedImage && deviceType === "youtube" ? (
               <img
                 src={uploadedImage}
@@ -346,12 +327,7 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
         </Drawer>
       </div>
 
-      <Link href="/">
-        <Button className="absolute left-4 top-4">
-          <House />
-          home
-        </Button>
-      </Link>
+      <DashBoardBtn />
     </div>
   );
 };
