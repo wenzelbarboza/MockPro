@@ -11,6 +11,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { cards } from "@/lib/cards";
 
+export const metadata = {
+  title: "Frames",
+  description: "",
+};
+
 const Frames = () => {
   return (
     <>

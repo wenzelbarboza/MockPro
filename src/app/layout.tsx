@@ -6,8 +6,9 @@ import type React from "react"; // Added import for React
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Responsive Navigation Layout",
-  description: "A responsive layout with collapsible navigation",
+  title: "MockPro",
+  description:
+    "MockPro - Create beautiful mockups and frame your images with ease",
 };
 
 export default function RootLayout({

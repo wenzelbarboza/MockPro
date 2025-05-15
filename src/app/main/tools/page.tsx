@@ -1,6 +1,11 @@
 import ToolCard from "@/components/ToolCard";
 import React from "react";
 
+export const metadata = {
+  title: "Tools",
+  description: "",
+};
+
 const Tools = () => {
   return (
     <>
