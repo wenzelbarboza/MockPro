@@ -4,8 +4,6 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import BottomNav from "./BottomNav";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { usePathname } from "next/navigation";
 
@@ -33,13 +31,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       {isMobile && (
         <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container flex h-14 items-center">
-            <Button variant="ghost" size="icon" className="mr-2 md:hidden">
+          <div className="container ml-4 flex h-14 items-center">
+            {/* <Button variant="ghost" size="icon" className="mr-2 md:hidden">
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle Menu</span>
-            </Button>
+            </Button> */}
             <div className="flex flex-1 items-center justify-between space-x-4 md:space-x-6">
-              <div className="font-bold">Logo</div>
+              <div className="font-bold">MockPro</div>
               <ThemeToggle />
             </div>
           </div>

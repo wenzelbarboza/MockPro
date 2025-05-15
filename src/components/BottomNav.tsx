@@ -3,7 +3,7 @@
 import type React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Settings, type LucideIcon } from "lucide-react";
+import { Home, User, Settings, type LucideIcon, Rocket } from "lucide-react";
 
 interface NavItem {
   icon: LucideIcon;
@@ -13,8 +13,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { icon: Home, text: "Home", href: "/" },
-  { icon: User, text: "Profile", href: "/profile" },
-  { icon: Settings, text: "Settings", href: "/settings" },
+  { icon: Rocket, text: "Dashboard", href: "/main" },
+  // { icon: User, text: "Profile", href: "/profile" },
+  // { icon: Settings, text: "Settings", href: "/settings" },
 ];
 
 const BottomNav: React.FC = () => {
