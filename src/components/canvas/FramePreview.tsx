@@ -105,7 +105,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
     );
 
     const ytLinkPlaceholder = (
-      <div className="flex h-full w-full flex-col justify-center gap-3 bg-yellow-300 p-6">
+      <div className="flex h-full w-full flex-col justify-center gap-3 bg-gray-200 p-6 shadow-lg">
         <input
           type="text"
           className="rounded-md p-2"
@@ -119,7 +119,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
     );
 
     const qrTextPlaceholder = (
-      <div className="flex h-full w-full flex-col justify-center gap-3 rounded-lg bg-yellow-300 p-6">
+      <div className="flex h-full w-full flex-col justify-center gap-3 rounded-lg bg-gray-200 p-6">
         <input
           type="text"
           placeholder="text for qr code"
