@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 
 export const metadata = {
-  title: "Dashboard",
+  title: "Dashboard | MockPro",
   description: "",
 };
 export default function RootLayout({

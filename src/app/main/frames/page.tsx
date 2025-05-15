@@ -12,7 +12,7 @@ import Image from "next/image";
 import { cards } from "@/lib/cards";
 
 export const metadata = {
-  title: "Frames",
+  title: "Frames | MockPro",
   description: "",
 };
 
