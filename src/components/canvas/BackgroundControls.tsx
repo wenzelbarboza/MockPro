@@ -47,49 +47,51 @@ const BackgroundControls: React.FC<BackgroundControlsProps> = ({
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">Magic Gradients</h3>
         <div className="grid grid-cols-5 gap-2">
-          {/* Original gradients */}
+          {/* Theme-based gradients */}
           <button
             onClick={() => {
               setBackgroundType("radial-gradient");
               setGradientStops([
-                { offset: 0, color: "#2E1437" },
-                { offset: 0.4, color: "#1C0F26" },
-                { offset: 0.6, color: "#150C1E" },
-                { offset: 1, color: "#0D0912" },
+                { offset: 0, color: "hsl(var(--background))" },
+                { offset: 0.4, color: "hsl(var(--card))" },
+                { offset: 0.6, color: "hsl(var(--popover))" },
+                { offset: 1, color: "hsl(var(--border))" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
               background: getRadialGradientStyle([
-                { offset: 0, color: "#2E1437" },
-                { offset: 0.4, color: "#1C0F26" },
-                { offset: 0.6, color: "#150C1E" },
-                { offset: 1, color: "#0D0912" },
+                { offset: 0, color: "hsl(var(--background))" },
+                { offset: 0.4, color: "hsl(var(--card))" },
+                { offset: 0.6, color: "hsl(var(--popover))" },
+                { offset: 1, color: "hsl(var(--border))" },
               ]),
             }}
-            title="Dark Nebula"
+            title="Theme Dark"
           />
           {/* New gradients */}
           <button
             onClick={() => {
-              setBackgroundType("radial-gradient");
+              setBackgroundType("linear-gradient");
+              setGradientAngle(135);
               setGradientStops([
-                { offset: 0, color: "#1A1A2E" },
-                { offset: 0.3, color: "#16213E" },
-                { offset: 0.7, color: "#0F3460" },
-                { offset: 1, color: "#533483" },
+                { offset: 0, color: "hsl(var(--card))" },
+                { offset: 0.5, color: "hsl(var(--secondary))" },
+                { offset: 1, color: "hsl(var(--accent))" },
               ]);
             }}
             className="aspect-square rounded-lg shadow-sm transition-transform hover:scale-105"
             style={{
-              background: getRadialGradientStyle([
-                { offset: 0, color: "#1A1A2E" },
-                { offset: 0.3, color: "#16213E" },
-                { offset: 0.7, color: "#0F3460" },
-                { offset: 1, color: "#533483" },
-              ]),
+              background: getGradientStyle(
+                [
+                  { offset: 0, color: "hsl(var(--card))" },
+                  { offset: 0.5, color: "hsl(var(--secondary))" },
+                  { offset: 1, color: "hsl(var(--accent))" },
+                ],
+                135,
+              ),
             }}
-            title="Cosmic Vortex"
+            title="Theme Blue"
           />
           <button
             onClick={() => {
