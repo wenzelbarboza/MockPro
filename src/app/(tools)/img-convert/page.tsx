@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { toPng, toJpeg, toSvg, toBlob } from "html-to-image";
 import { ArrowLeft, Download, Upload, Image as ImageIcon } from "lucide-react";
@@ -15,6 +16,7 @@ const ImageConvert = () => {
   const [fileName, setFileName] = useState<string>("converted-image");
   const [isConverting, setIsConverting] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const { theme } = useTheme();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -173,7 +175,7 @@ const ImageConvert = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-4 dark:from-gray-900 dark:to-gray-800 md:p-8">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
@@ -183,7 +185,7 @@ const ImageConvert = () => {
               <span>Back to Dashboard</span>
             </Button>
           </Link>
-          <h1 className="text-center text-2xl font-bold text-gray-800 md:text-3xl">
+          <h1 className="text-center text-2xl font-bold text-gray-800 dark:text-white md:text-3xl">
             Image Converter
           </h1>
           <div className="w-[100px]"></div> {/* Spacer for centering */}
@@ -191,10 +193,10 @@ const ImageConvert = () => {
 
         <div className="grid gap-8 md:grid-cols-[1fr_300px]">
           {/* Main Content - Left Side */}
-          <div className="rounded-xl bg-white p-6 shadow-md">
+          <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-900">
             {/* Image Preview Area */}
             <div
-              className={`relative mb-6 flex min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed p-4 transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}
+              className={`relative mb-6 flex min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed p-4 transition-colors ${isDragging ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20" : "border-gray-300 dark:border-gray-600"}`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
@@ -206,16 +208,18 @@ const ImageConvert = () => {
                   style={{ background: "transparent" }}
                 >
                   {selectedFormat === "svg" ? (
-                    <img
-                      src={uploadedImage}
-                      alt="Uploaded"
-                      className="block"
-                      style={{
-                        maxWidth: "100%",
-                        width: "auto",
-                        height: "auto",
-                      }}
-                    />
+                    <div className="rounded-md bg-white p-2 dark:bg-gray-800">
+                      <img
+                        src={uploadedImage}
+                        alt="Uploaded"
+                        className="block"
+                        style={{
+                          maxWidth: "100%",
+                          width: "auto",
+                          height: "auto",
+                        }}
+                      />
+                    </div>
                   ) : (
                     <img
                       src={uploadedImage}
@@ -228,10 +232,10 @@ const ImageConvert = () => {
               ) : (
                 <div className="flex flex-col items-center justify-center text-center">
                   <ImageIcon size={64} className="mb-4 text-gray-400" />
-                  <h3 className="mb-2 text-lg font-medium text-gray-700">
+                  <h3 className="mb-2 text-lg font-medium text-gray-700 dark:text-gray-300">
                     Drag & Drop your image here
                   </h3>
-                  <p className="mb-4 text-sm text-gray-500">
+                  <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
                     or click to browse files
                   </p>
                   <Button
@@ -287,14 +291,14 @@ const ImageConvert = () => {
           </div>
 
           {/* Controls Panel - Right Side */}
-          <div className="rounded-xl bg-white p-6 shadow-md">
-            <h2 className="mb-6 text-xl font-semibold text-gray-800">
+          <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-900">
+            <h2 className="mb-6 text-xl font-semibold text-gray-800 dark:text-white">
               Conversion Options
             </h2>
 
             {/* Format Selection */}
             <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-700">
+              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Output Format
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -315,7 +319,7 @@ const ImageConvert = () => {
             {/* Quality Slider (not applicable for SVG) */}
             {selectedFormat !== "svg" && (
               <div className="mb-6">
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Quality: {quality}%
                 </label>
                 <input
@@ -335,7 +339,7 @@ const ImageConvert = () => {
 
             {/* Filename */}
             <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-700">
+              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Filename
               </label>
               <div className="flex rounded-md">
@@ -346,18 +350,18 @@ const ImageConvert = () => {
                   className="w-full rounded-l-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
                   placeholder="Enter filename"
                 />
-                <span className="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-500">
+                <span className="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400">
                   .{selectedFormat === "jpeg" ? "jpg" : selectedFormat}
                 </span>
               </div>
             </div>
 
             {/* Format Information */}
-            <div className="rounded-md bg-gray-50 p-4">
-              <h3 className="mb-2 text-sm font-medium text-gray-700">
+            <div className="rounded-md bg-gray-50 p-4 dark:bg-gray-800">
+              <h3 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 About {selectedFormat.toUpperCase()}
               </h3>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-gray-600 dark:text-gray-400">
                 {selectedFormat === "png" &&
                   "PNG format supports transparency and is ideal for images with sharp details and text."}
                 {selectedFormat === "jpeg" &&
