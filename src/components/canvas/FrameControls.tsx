@@ -3,6 +3,7 @@
 import React from "react";
 import { type DeviceType } from "../InstaCanvas";
 import { redirect } from "next/navigation";
+import { Slider } from "../ui/slider";
 
 interface FrameControlsProps {
   frameColor: string;
@@ -82,12 +83,11 @@ const FrameControls: React.FC<FrameControlsProps> = ({
           {deviceType === "basic" && (
             <div className="flex items-center gap-2">
               <label className="w-24 text-sm">Thickness:</label>
-              <input
-                type="range"
-                min="1"
-                max="50"
-                value={frameThickness}
-                onChange={(e) => setFrameThickness(Number(e.target.value))}
+              <Slider
+                min={1}
+                max={50}
+                value={[frameThickness]}
+                onValueChange={([value]) => setFrameThickness(value!)}
                 className="flex-1"
               />
               <span className="w-12 text-sm">{frameThickness}px</span>
@@ -96,12 +96,11 @@ const FrameControls: React.FC<FrameControlsProps> = ({
 
           <div className="flex items-center gap-2">
             <label className="w-24 text-sm">Rotation:</label>
-            <input
-              type="range"
-              min="0"
-              max="360"
-              value={frameRotation}
-              onChange={(e) => setFrameRotation(Number(e.target.value))}
+            <Slider
+              min={0}
+              max={360}
+              value={[frameRotation]}
+              onValueChange={([value]) => setFrameRotation(value!)}
               className="flex-1"
             />
             <span className="w-12 text-sm">{frameRotation}°</span>
@@ -109,12 +108,11 @@ const FrameControls: React.FC<FrameControlsProps> = ({
 
           <div className="flex items-center gap-2">
             <label className="w-24 text-sm">Size:</label>
-            <input
-              type="range"
+            <Slider
               min={deviceType === "iphone15" ? 200 : 100}
               max={deviceType === "iphone15" ? 800 : 600}
-              value={frameSize}
-              onChange={(e) => setFrameSize(Number(e.target.value))}
+              value={[frameSize]}
+              onValueChange={([value]) => setFrameSize(value!)}
               className="flex-1"
             />
             <span className="w-12 text-sm">{frameSize}px</span>
@@ -122,12 +120,11 @@ const FrameControls: React.FC<FrameControlsProps> = ({
 
           <div className="flex items-center gap-2">
             <label className="w-24 text-sm">Tilt X:</label>
-            <input
-              type="range"
-              min="-45"
-              max="45"
-              value={frameTiltX ?? 0}
-              onChange={(e) => setFrameTiltX?.(Number(e.target.value))}
+            <Slider
+              min={-45}
+              max={45}
+              value={frameTiltX ? [frameTiltX] : [0]}
+              onValueChange={([Value]) => setFrameTiltX?.(Value!)}
               className="flex-1"
             />
             <span className="w-12 text-sm">{frameTiltX ?? 0}°</span>
@@ -135,12 +132,11 @@ const FrameControls: React.FC<FrameControlsProps> = ({
 
           <div className="flex items-center gap-2">
             <label className="w-24 text-sm">Tilt Y:</label>
-            <input
-              type="range"
-              min="-45"
-              max="45"
-              value={frameTiltY ?? 0}
-              onChange={(e) => setFrameTiltY?.(Number(e.target.value))}
+            <Slider
+              min={-45}
+              max={45}
+              value={frameTiltY ? [frameTiltY] : [0]}
+              onValueChange={([Value]) => setFrameTiltY?.(Value!)}
               className="flex-1"
             />
             <span className="w-12 text-sm">{frameTiltY ?? 0}°</span>
