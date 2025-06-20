@@ -140,7 +140,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               name="Name"
               id="name"
               placeholder="Enter title"
-              className="w-full border-none text-xl font-medium outline-none"
+              className="w-full border-none bg-white text-xl font-medium text-black outline-none"
               onChange={(e) => setTestimonialTitle(e.target.value)}
               value={testimonialTitle}
             />
@@ -169,7 +169,7 @@ const FramePreview: React.FC<FramePreviewProps> = ({
               placeholder="Write your testimonial here..."
               onChange={(e) => setTestimonialContent(e.target.value)}
               value={testimonialContent}
-              className="w-full overflow-hidden border-none outline-none"
+              className="w-full overflow-hidden border-none bg-white text-black outline-none"
               style={{ resize: "none" }}
               rows={1}
             />

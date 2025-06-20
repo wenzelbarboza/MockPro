@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toPng, toJpeg, toSvg, toBlob } from "html-to-image";
 import { ArrowLeft, Download, Upload, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
+import DashBoardBtn from "@/components/ui/dashBoardBtn";
 
 type ImageFormat = "png" | "jpeg" | "svg" | "webp";
 
@@ -178,8 +179,8 @@ const ImageConvert = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-4 dark:from-gray-900 dark:to-gray-800 md:p-8">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <Link href="/">
+        {/* <div className="mb-8 flex items-center justify-between">
+          <Link href="/main">
             <Button variant="ghost" className="flex items-center gap-2">
               <ArrowLeft size={18} />
               <span>Back to Dashboard</span>
@@ -188,10 +189,10 @@ const ImageConvert = () => {
           <h1 className="text-center text-2xl font-bold text-gray-800 dark:text-white md:text-3xl">
             Image Converter
           </h1>
-          <div className="w-[100px]"></div> {/* Spacer for centering */}
-        </div>
+          <div className="w-[100px]"></div> 
+        </div> */}
 
-        <div className="grid gap-8 md:grid-cols-[1fr_300px]">
+        <div className="mt-14 grid gap-8 md:grid-cols-[1fr_300px]">
           {/* Main Content - Left Side */}
           <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-900">
             {/* Image Preview Area */}
@@ -375,6 +376,8 @@ const ImageConvert = () => {
           </div>
         </div>
       </div>
+
+      <DashBoardBtn />
     </div>
   );
 };

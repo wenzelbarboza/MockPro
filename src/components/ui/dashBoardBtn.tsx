@@ -1,14 +1,15 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "./button";
-import { Rocket } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const DashBoardBtn = () => {
   return (
     <Link href="/main">
-      <Button className="absolute left-4 top-4">
-        <Rocket />
-        Dashboard
+      <Button variant={"ghost"} className="absolute left-4 top-4">
+        {/* <Rocket /> */}
+        <ArrowLeft size={18} />
+        Back to Dashboard
       </Button>
     </Link>
   );

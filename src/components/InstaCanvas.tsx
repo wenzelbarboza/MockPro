@@ -303,7 +303,7 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
         <div className="block md:hidden">
           <Drawer>
             <DrawerTrigger
-              className={` ${buttonVariants({ variant: "default" })} absolute bottom-4 left-1/2 z-50 -translate-x-1/2 transform rounded bg-blue-600 px-4 py-2 text-white shadow-lg`}
+              className={` ${buttonVariants({ variant: "ghost" })} absolute bottom-4 left-1/2 z-50 -translate-x-1/2 transform rounded bg-blue-600 px-4 py-2 shadow-lg`}
             >
               Open
             </DrawerTrigger>
@@ -363,7 +363,7 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
       <div className="block md:hidden">
         <Drawer>
           <DrawerTrigger
-            className={` ${buttonVariants({ variant: "default" })} absolute bottom-4 left-1/2 z-50 -translate-x-1/2 transform rounded bg-blue-600 px-4 py-2 text-white shadow-lg`}
+            className={` ${buttonVariants({ variant: "default" })} absolute bottom-4 left-1/2 z-50 -translate-x-1/2 transform rounded px-4 py-2 text-white shadow-lg dark:text-black`}
           >
             Open
           </DrawerTrigger>
