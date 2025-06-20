@@ -17,6 +17,7 @@ import {
 import { Button, buttonVariants } from "./ui/button";
 import { handleDownload } from "@/lib/download";
 import DashBoardBtn from "./ui/dashBoardBtn";
+import { useTheme } from "next-themes"; // Correct import
 
 type BackgroundType = "solid" | "linear-gradient" | "radial-gradient";
 export type DeviceType =
@@ -43,12 +44,19 @@ type InstaCanvasProps = {
 const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme, resolvedTheme } = useTheme(); // Get resolvedTheme too
+  const [mounted, setMounted] = useState(false); // New state for mounting
 
   const [activeTab, setActiveTab] = useState<"background" | "frame">(
     "background",
   );
   const [backgroundType, setBackgroundType] = useState<BackgroundType>("solid");
+
+  // Initialize backgroundColor with a default, then update it in useEffect
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+  // Or, if you want it to be initially invisible/neutral until mounted:
+  // const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
+
   const [gradientStops, setGradientStops] = useState<GradientStop[]>(
     DEFAULT_GRADIENT_STOPS,
   );
@@ -62,6 +70,16 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
   const [deviceType, setDeviceType] = useState<DeviceType>(type);
   const [frameSize, setFrameSize] = useState(deviceType == "basic" ? 200 : 300);
   const [qrtext, setQrtext] = useState("");
+
+  // Use useEffect to set the initial background color based on the resolved theme
+  useEffect(() => {
+    setMounted(true); // Mark component as mounted
+
+    // Only set background color if a theme is resolved
+    if (resolvedTheme) {
+      setBackgroundColor(resolvedTheme === "dark" ? "#2C2C2C" : "#ffffff");
+    }
+  }, [resolvedTheme]); // Depend on resolvedTheme
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -81,6 +99,14 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
   };
 
   const getBackgroundStyle = () => {
+    // If not mounted yet, return a default style to prevent hydration errors
+    // You could also return a completely transparent background or a placeholder
+    if (!mounted) {
+      // You might want a default background during SSR that doesn't cause a mismatch,
+      // or ensure `backgroundColor` is initialized to something neutral.
+      return { background: "#ffffff" }; // Default to light mode background for SSR
+    }
+
     if (backgroundType === "solid") {
       return { background: backgroundColor };
     }
@@ -254,14 +280,62 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
     return null;
   };
 
+  // Only render theme-dependent UI after mounting to prevent hydration errors
+  if (!mounted) {
+    return (
+      <div className="relative flex h-screen w-full overflow-hidden">
+        {/* Placeholder or loading spinner for SSR */}
+        <div className="dark:bg- flex w-full items-center justify-center overflow-hidden bg-gray-50 p-2 dark:bg-[#121212] md:w-3/4 md:p-0">
+          <div
+            id="canvas-content"
+            className="relative aspect-square w-[600px] border-2 border-gray-300 shadow-lg"
+            // Set a consistent background for SSR (e.g., your light mode default)
+            style={{ background: "#ffffff" }}
+          >
+            {/* You might want a simple loading skeleton here */}
+          </div>
+        </div>
+        {/* Render the controls panel only if it doesn't depend on theme initially */}
+        <div className="hidden overflow-y-auto bg-background p-4 md:block md:w-1/4">
+          {/* Consider if controlsPannel needs to be client-side only initially */}
+          {controlsPannel()}
+        </div>
+        <div className="block md:hidden">
+          <Drawer>
+            <DrawerTrigger
+              className={` ${buttonVariants({ variant: "default" })} absolute bottom-4 left-1/2 z-50 -translate-x-1/2 transform rounded bg-blue-600 px-4 py-2 text-white shadow-lg`}
+            >
+              Open
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle></DrawerTitle>
+                <div className="h- h-[70vh] overflow-y-scroll">
+                  {/* Consider if controlsPannel needs to be client-side only initially */}
+                  {controlsPannel()}
+                </div>
+              </DrawerHeader>
+              <DrawerFooter>
+                <DrawerClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        </div>
+        <DashBoardBtn />
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex h-screen w-full overflow-hidden">
       {/* Preview Area - Left Side */}
-      <div className="flex w-full items-center justify-center overflow-hidden bg-gray-50 p-2 md:w-3/4 md:p-0">
+      <div className="dark:bg- flex w-full items-center justify-center overflow-hidden bg-gray-50 p-2 dark:bg-[#121212] md:w-3/4 md:p-0">
         <div
           id="canvas-content"
           className="relative aspect-square w-[600px] border-2 border-gray-300 shadow-lg"
-          style={getBackgroundStyle()}
+          style={getBackgroundStyle()} // This will now correctly use the updated backgroundColor
         >
           <FramePreview
             frameColor={frameColor}
@@ -276,23 +350,6 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
             setQrtext={setQrtext}
           >
             {handleFrame()}
-            {/* {uploadedImage && deviceType === "youtube" ? (
-              <img
-                src={uploadedImage}
-                alt="Uploaded"
-                className="h-full w-full object-contain"
-                style={{ display: "block", position: "absolute", inset: "0" }}
-              />
-            ) : (
-              uploadedImage && (
-                <img
-                  src={uploadedImage}
-                  alt="Uploaded"
-                  className="h-full w-full object-cover"
-                  style={{ display: "block", position: "absolute", inset: "0" }}
-                />
-              )
-            )} */}
           </FramePreview>
         </div>
       </div>
@@ -304,7 +361,6 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
 
       {/* Drawer */}
       <div className="block md:hidden">
-        {/* this the real code */}
         <Drawer>
           <DrawerTrigger
             className={` ${buttonVariants({ variant: "default" })} absolute bottom-4 left-1/2 z-50 -translate-x-1/2 transform rounded bg-blue-600 px-4 py-2 text-white shadow-lg`}
