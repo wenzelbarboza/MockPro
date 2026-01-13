@@ -359,7 +359,7 @@ const InstaCanvas = ({ type }: InstaCanvasProps): JSX.Element => {
         {controlsPannel()}
       </div>
 
-      {/* Drawer */}
+      {/* Drawer For mobile */}
       <div className="block md:hidden">
         <Drawer>
           <DrawerTrigger
