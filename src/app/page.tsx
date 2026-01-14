@@ -50,12 +50,12 @@ const Navbar = () => (
         </a>
       </div>
       <div className="flex items-center gap-4">
-        <Link
+        {/* <Link
           href="/login"
           className="hidden text-sm font-medium text-muted-foreground hover:text-foreground sm:block"
         >
           Log in
-        </Link>
+        </Link> */}
         <Link href="/main">
           <Button
             size="sm"
@@ -685,7 +685,7 @@ export default function LandingPage() {
       `}</style>
       <Navbar />
       <Hero />
-      <SocialProof />
+      {/* <SocialProof /> */}
       <HowItWorks />
       <Features />
       <CTA />
