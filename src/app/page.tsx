@@ -271,7 +271,7 @@ const HowItWorks = () => {
     {
       icon: <Upload className="h-6 w-6 text-blue-500" />,
       title: "1. Upload your shot",
-      desc: "Drag and drop your screenshot. We support PNG, JPG, and WebP. We'll automatically detect the aspect ratio.",
+      desc: "Drag and drop your screenshot. We support PNG, JPG, and WebP. We&apos;ll automatically detect the aspect ratio.",
       visual: (
         <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl border border-dashed border-border bg-background">
           <div className="absolute inset-0 bg-blue-500/5 transition-colors group-hover:bg-blue-500/10"></div>
@@ -437,7 +437,7 @@ const Features = () => {
                 </h3>
                 <p className="max-w-sm text-lg text-zinc-400">
                   No loading spinners. No complex settings. Just paste, tweak,
-                  and download. It's the fastest workflow on the planet.
+                  and download. It&apos;s the fastest workflow on the planet.
                 </p>
               </div>
               <div className="relative mt-8">
@@ -461,8 +461,8 @@ const Features = () => {
                 No Watermark
               </h3>
               <p className="text-muted-foreground">
-                Your work is yours. We don't plaster our logo on your hard work.
-                Even on the free plan.
+                Your work is yours. We don&apos;t plaster our logo on your hard
+                work. Even on the free plan.
               </p>
             </div>
             <div className="mt-4 md:mt-0">
